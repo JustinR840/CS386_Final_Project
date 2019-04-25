@@ -7,7 +7,7 @@ const bodyParser = require('koa-bodyparser');
 app.use(bodyParser());
 app.use(cors({credentials: true}));
 const http = require('http');
-const API_PORT = 8148;
+const API_PORT = 8121;
 
 require('./config/routes.js')(app);
 
