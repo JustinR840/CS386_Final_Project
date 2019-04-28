@@ -1,4 +1,5 @@
-const Authorize = require('../app/Authorize.js');
+const Authorize = require('../app/Middleware/Authorize.js');
+const VerifyJWT = require('../app/Middleware/VerifyJWT.js');
 
 /*
 |--------------------------------------------------------------------------
@@ -30,27 +31,33 @@ loginRouter.get('/:user_id', LoginController.authorizeUser, (err) => console.log
 
 
 /**
- * Theaters controller
+ * Advisees controller
  */
 
-const TheatersController = new (require('../app/Controllers/TheatersController.js'))();
-const theatersRouter = require('koa-router')({
-    prefix: '/theaters'
+const AdviseesController = new (require('../app/Controllers/AdviseesController.js'))();
+const adviseesRouter = require('koa-router')({
+    prefix: '/advisees'
 });
 
-theatersRouter.get('/', Authorize('admin'), TheatersController.allLocations, (err) => console.log(err));
+adviseesRouter.use(VerifyJWT);
+adviseesRouter.get('/', Authorize('admin'), AdviseesController.allAdvisees, (err) => console.log(err));
+adviseesRouter.get('/:advisee_id', Authorize('admin'), AdviseesController.adviseeInformation, (err) => console.log(err));
+adviseesRouter.get('/:advisee_id/advisors', Authorize('admin'), AdviseesController.advisorsForAdvisee, (err) => console.log(err));
 
 
 /**
- * Movies controller
+ * Advisors controller
  */
 
-const MoviesController = new (require('../app/Controllers/MoviesController.js'))();
-const moviesRouter = require('koa-router')({
-    prefix: '/movies'
+const AdvisorsController = new (require('../app/Controllers/AdvisorsController.js'))();
+const advisorsRouter = require('koa-router')({
+    prefix: '/advisors'
 });
 
-moviesRouter.get('/', Authorize('admin'), MoviesController.allMovies, (err) => console.log(err));
+advisorsRouter.use(VerifyJWT);
+advisorsRouter.get('/', Authorize('advisor'), AdvisorsController.allAdvisors, (err) => console.log(err));
+advisorsRouter.get('/:advisor_id', Authorize('advisor'), AdvisorsController.advisorInformation, (err) => console.log(err));
+advisorsRouter.get('/:advisor_id/advisees', Authorize('advisor'), AdvisorsController.adviseesForAdvisor, (err) => console.log(err));
 
 
 /**
@@ -59,8 +66,8 @@ moviesRouter.get('/', Authorize('admin'), MoviesController.allMovies, (err) => c
 router.use(
     '',
     loginRouter.routes(),
-    moviesRouter.routes(),
-    theatersRouter.routes()
+    adviseesRouter.routes(),
+    advisorsRouter.routes()
 );
 
 module.exports = function (app) {
