@@ -23,8 +23,6 @@ class App extends Component
 
     setUser(user)
     {
-        console.log(user);
-
         this.pushHistory("/landing");
 
         this.setState({user: user});
@@ -44,8 +42,10 @@ class App extends Component
             <div>
                 <CSSBaseline/>
 
+                {console.log(this.state.user)}
+
                 <Switch>
-                    <Route exact path="/landing" render={() => <LandingPage/>}/>
+                    <Route exact path="/landing" render={() => <LandingPage userType={this.state.user !== null ? this.state.user['role'] : "none"}/>}/>
                     <Route exact path="/login" render={() => <LoginPage setUser={this.setUser}/>}/> :
                     <Route component={FourOFour}/>
                 </Switch>
