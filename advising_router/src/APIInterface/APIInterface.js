@@ -20,6 +20,11 @@ class APIInterface {
 
 	}
 
+	async getAdviseesForAdvisor(advsor_id)
+	{
+		return axios.get(`advisors/${advsor_id}/advisees`);
+	}
+
 	async getCourses(term, subject) {
 		console.log('getCourses', term, subject);
 		return axios.get(`courses/${term}/${subject}/term-subject`);
