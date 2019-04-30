@@ -13,10 +13,13 @@ class LoginPage extends Component
 
 	render()
 	{
+		let userName = 'Erei';
 		let AdvisorNames = ['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc'];
 
+		console.log(AdvisorNames);
+
 		return (
-			<Header menuName="My Advisors" itemNames={AdvisorNames}/>
+			<Header menuName="My Advisors" itemNames={AdvisorNames} userName={userName}/>
 		);
 	}
 }
