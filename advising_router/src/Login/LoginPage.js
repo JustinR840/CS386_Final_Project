@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import LoginBox from "./LoginBox.js"
-import {Redirect} from "react-router-dom";
 
 
 class LoginPage extends Component

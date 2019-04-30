@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CSSBaseline from '@material-ui/core/CssBaseline';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 
 import FourOFour from './Pages/Errors/404.js';
 import LoginPage from './Pages/Login/LoginPage.js';
@@ -24,7 +24,16 @@ class App extends Component
     setUser(user)
     {
         console.log(user);
+
+        this.pushHistory("/landing");
+
         this.setState({user: user});
+    }
+
+
+    pushHistory(location)
+    {
+        this.props.history.push(location);
     }
 
 
@@ -36,14 +45,8 @@ class App extends Component
                 <CSSBaseline/>
 
                 <Switch>
-                    <Route path="/landing" render={() => <LandingPage/>}/>
-                    <Route path="/login" render={() => <LoginPage setUser={this.setUser}/>}/> :
-                    {
-                        // TODO: Try and use the authentication cookie?
-                        this.state.user === null ?
-                        <Redirect to="/login"/> :
-                        <Redirect to="/landing"/>
-                    }
+                    <Route exact path="/landing" render={() => <LandingPage/>}/>
+                    <Route exact path="/login" render={() => <LoginPage setUser={this.setUser}/>}/> :
                     <Route component={FourOFour}/>
                 </Switch>
 
@@ -52,4 +55,4 @@ class App extends Component
     }
 }
 
-export default App;
+export default withRouter(App);
