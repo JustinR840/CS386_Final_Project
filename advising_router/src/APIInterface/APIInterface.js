@@ -20,6 +20,10 @@ class APIInterface {
 
 	}
 
+	async getAdvisor(user_id){
+		return axios.get(`advisees/${user_id}/advisors`);
+	}
+
 	async getCourses(term, subject) {
 		console.log('getCourses', term, subject);
 		return axios.get(`courses/${term}/${subject}/term-subject`);
@@ -32,4 +36,3 @@ class APIInterface {
 
 }
 export default APIInterface
-

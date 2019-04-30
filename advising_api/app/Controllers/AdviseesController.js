@@ -11,7 +11,7 @@ class AdviseesController {
 	async allAdvisees(ctx) {
 		return new Promise((resolve, reject) => {
 			let query = `
-                    CALL GetAllAdvisees()
+                    select * from advising_student;
                         `;
 			// console.log('About to run this query.', query);
 			dbConnection.query({
@@ -23,7 +23,7 @@ class AdviseesController {
 					ctx.status = 500;
 					return reject(error);
 				}
-				ctx.body = tuples[0];
+				ctx.body = tuples;
 				ctx.status = 200;
 				return resolve();
 			});
@@ -38,8 +38,11 @@ class AdviseesController {
 				console.log('about to return because user input contains non-alphanumeric characters..');
 				return reject("Invalid user id.");
 			}
+			console.log(ctx.params.advisee_id)
+			values : [ctx.params.advisee_id];
 			let query = `
-                    CALL GetAdviseeInformation(?)
+			SELECT * FROM advising_student WHERE student_id = ?;
+
                         `;
 			// console.log('About to run this query.', query);
 			dbConnection.query({
@@ -67,9 +70,8 @@ class AdviseesController {
 				console.log('about to return because user input contains non-alphanumeric characters..');
 				return reject("Invalid user id.");
 			}
-			let query = `
-                    CALL GetAdvisorsForAdvisee(?)
-                        `;
+			values: [ctx.params.advisee_id]
+			let query = `SELECT * FROM advising_student_advisor asa LEFT JOIN advising_advisor aa ON asa.advisor_id = aa.advisor_id WHERE asa.student_id = ?;`;
 			// console.log('About to run this query.', query);
 			dbConnection.query({
 				sql: query,

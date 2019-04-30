@@ -43,7 +43,7 @@ class LoginController {
 
                     // If we find a user...
                     if (tuples.length === 1) {  // Did we have a matching user record?
-
+                        console.log(tuples)
                         // TODO: The below should be removed and the hashes stored in the DB itself, but whatever this works for now.
                         // Verify that the passwords match
                         let try_password_hash = crypto.createHash('md5').update(tuples[0]['password_hash']).digest('hex');
