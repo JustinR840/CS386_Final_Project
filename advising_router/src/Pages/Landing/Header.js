@@ -24,7 +24,7 @@ const styles = theme => ({
 
 function Header(props) {
 	const { classes } = props;
-  console.log(props.itemNames);
+	console.log(props.itemNames);
 	console.log(props.userName);
 	return (
 		<div className={classes.root}>

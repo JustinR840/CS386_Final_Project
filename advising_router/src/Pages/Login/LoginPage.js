@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 
 import LoginBox from "./LoginBox.js"
-import {Redirect} from "react-router-dom";
+import API from "../../APIInterface/APIInterface.js";
 
 
-class LoginPage extends Component
+class LandingPage extends Component
 {
 	constructor(props)
 	{
 		super(props);
 
 		this.state = {
+			setUser: this.props.setUser,
 			user_id: "",
 			password: "",
 			info_error: false
@@ -34,15 +35,31 @@ class LoginPage extends Component
 	{
 		event.preventDefault();
 
-		// TODO: Check against database
-		let info_error = false;
+		const api = new API();
 
-		if(this.state.user_id !== "004")
+		api.getUserInfo(this.state.user_id, this.state.password).then((info) =>
 		{
-			info_error = true;
-		}
 
-		this.setState({info_error: info_error});
+			let user = info['data']['user'];
+			if(user !== null)
+			{
+				// TODO: Remove me
+				console.log("LOGIN SUCCESS");
+				console.log(info);
+				this.state.setUser(user);
+				this.setState({info_error: false});
+			}
+			else
+			{
+				// TODO: Remove me
+				console.log("LOGIN FAIL");
+				this.setState({info_error: true});
+			}
+
+		}).catch((error) =>
+		{
+			// What kind of error should be here?
+		});
 	};
 
 	render()
@@ -53,4 +70,4 @@ class LoginPage extends Component
 	}
 }
 
-export default LoginPage;
+export default LandingPage;
