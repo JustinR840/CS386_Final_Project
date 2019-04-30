@@ -4,7 +4,7 @@ import Header from './Header.js'
 
 
 
-class LoginPage extends Component
+class LandingPage extends Component
 {
 	render()
 	{
@@ -18,4 +18,4 @@ class LoginPage extends Component
 	}
 }
 
-export default LoginPage;
+export default LandingPage;
