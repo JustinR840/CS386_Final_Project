@@ -4,7 +4,7 @@ import Header from './Header.js'
 
 
 
-class LoginPage extends Component
+class LandingPage extends Component
 {
 	constructor(props)
 	{
@@ -14,11 +14,12 @@ class LoginPage extends Component
 	render()
 	{
 		let AdvisorNames = ['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc'];
-
+      console.log(AdvisorNames)
 		return (
+
 			<Header menuName="My Advisors" itemNames={AdvisorNames}/>
 		);
 	}
 }
 
-export default LoginPage;
+export default LandingPage;

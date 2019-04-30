@@ -4,7 +4,7 @@ import LoginBox from "./LoginBox.js"
 import {Redirect} from "react-router-dom";
 
 
-class LandingPage extends Component
+class LoginPage extends Component
 {
 	constructor(props)
 	{
@@ -53,4 +53,4 @@ class LandingPage extends Component
 	}
 }
 
-export default LandingPage;
+export default LoginPage;
