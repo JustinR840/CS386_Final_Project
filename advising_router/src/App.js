@@ -43,7 +43,7 @@ class App extends Component
                 <CSSBaseline/>
 
                 <Switch>
-                    <Route exact path="/landing" render={() => <LandingPage userType={this.state.user !== null ? this.state.user['role'] : "none"}/>}/>
+                    <Route exact path="/landing" render={() => <LandingPage user={this.state.user !== null ? this.state.user : null}/>}/>
                     <Route exact path="/login" render={() => <LoginPage setUser={this.setUser}/>}/> :
                     <Route component={FourOFour}/>
                 </Switch>
