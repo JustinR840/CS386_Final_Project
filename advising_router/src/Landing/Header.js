@@ -24,7 +24,7 @@ const styles = theme => ({
 
 function Header(props) {
 	const { classes } = props;
-
+  console.log(props.itemNames);
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
@@ -32,7 +32,7 @@ function Header(props) {
 					<Button className={classes.button}>My Sessions</Button>
 
 					{/*Should reuse this component by passing in props for things such as menu name and options*/}
-					<MenuListComposition/>
+					<MenuListComposition menuName ={'Advisors'} itemNames={props.itemNames}/>
 
 					<p className={classes.grow}/>
 
