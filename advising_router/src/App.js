@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import CSSBaseline from '@material-ui/core/CssBaseline';
 import { Route, Link } from 'react-router-dom';
 
-import LoginPage from './Login/LoginPage.js';
-import LandingPage from './Landing/LandingPage.js';
+import LoginPage from './Pages/Login/LoginPage.js';
+import LandingPage from './Pages/Landing/LandingPage.js';
 
 
 class App extends Component {
