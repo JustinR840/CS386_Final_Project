@@ -11,6 +11,7 @@ class LandingPage extends Component
 		super(props);
 
 		this.state = {
+			setUser: this.props.setUser,
 			user_id: "",
 			password: "",
 			info_error: false
@@ -39,20 +40,26 @@ class LandingPage extends Component
 		api.getUserInfo(this.state.user_id, this.state.password).then((info) =>
 		{
 
+			let user = info['data']['user'];
+			if(user !== null)
+			{
+				// TODO: Remove me
+				console.log("LOGIN SUCCESS");
+				console.log(info);
+				this.state.setUser(user);
+				this.setState({info_error: false});
+			}
+			else
+			{
+				// TODO: Remove me
+				console.log("LOGIN FAIL");
+				this.setState({info_error: true});
+			}
+
 		}).catch((error) =>
 		{
-
+			// What kind of error should be here?
 		});
-
-		// TODO: Check against database
-		let info_error = false;
-
-		if(this.state.user_id !== "004")
-		{
-			info_error = true;
-		}
-
-		this.setState({info_error: info_error});
 	};
 
 	render()
