@@ -25,18 +25,19 @@ const styles = theme => ({
 function Header(props) {
 	const { classes } = props;
   console.log(props.itemNames);
+	console.log(props.userName);
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
-					<Button className={classes.button}>My Sessions</Button>
+					<MenuListComposition menuName ={'Sessions'} itemNames={['Upcoming', 'Past', 'Cancelled', 'New']}/>
 
 					{/*Should reuse this component by passing in props for things such as menu name and options*/}
 					<MenuListComposition menuName ={'Advisors'} itemNames={props.itemNames}/>
 
 					<p className={classes.grow}/>
 
-					UR A STUDENT, EREI.
+					UR A STUDENT, {props.userName}.
 
 					<Avatar alt="Mr Erei" src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/14/1431c4dd8fa5afcd314cd5cdf78b9ad8d49556fb_full.jpg" className={classes.avatar} />
 
