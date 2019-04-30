@@ -24,8 +24,7 @@ const styles = theme => ({
 
 function Header(props) {
 	const { classes } = props;
-	console.log(props.itemNames);
-	console.log(props.userName);
+
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
@@ -37,7 +36,7 @@ function Header(props) {
 
 					<p className={classes.grow}/>
 
-					UR A STUDENT, {props.userName}.
+					UR A {props.userType}, {props.userName}.
 
 					<Avatar alt="Mr Erei" src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/14/1431c4dd8fa5afcd314cd5cdf78b9ad8d49556fb_full.jpg" className={classes.avatar} />
 

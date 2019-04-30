@@ -37,9 +37,6 @@ class MenuListComposition extends Component {
 		const { menuName, itemNames, classes } = this.props;
 		const { open } = this.state;
 
-		console.log(menuName);
-		console.log(itemNames);
-
 		return (
 			<div className={classes.root}>
 				<div>
