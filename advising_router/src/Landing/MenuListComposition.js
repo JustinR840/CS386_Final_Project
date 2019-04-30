@@ -8,6 +8,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { withStyles } from '@material-ui/core/styles';
+import red from '@material-ui/core/colors/red';
 
 const styles = theme => ({
 	root: {
@@ -42,7 +43,7 @@ class MenuListComposition extends Component {
 		return (
 			<div className={classes.root}>
 				<div>
-					<Button buttonRef={node => {this.anchorEl = node;}} aria-owns={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={this.handleToggle}>
+					<Button color="inherit" buttonRef={node => {this.anchorEl = node;}} aria-owns={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={this.handleToggle}>
 						<p>{menuName}</p>
 					</Button>
 					<Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
