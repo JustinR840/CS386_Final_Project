@@ -40,9 +40,9 @@ const adviseesRouter = require('koa-router')({
 });
 
 adviseesRouter.use(VerifyJWT);
-adviseesRouter.get('/', Authorize('admin'), AdviseesController.allAdvisees, (err) => console.log(err));
-adviseesRouter.get('/:advisee_id', Authorize('admin'), AdviseesController.adviseeInformation, (err) => console.log(err));
-adviseesRouter.get('/:advisee_id/advisors', Authorize('admin'), AdviseesController.advisorsForAdvisee, (err) => console.log(err));
+adviseesRouter.get('/', Authorize('advisee'), AdviseesController.allAdvisees, (err) => console.log(err));
+adviseesRouter.get('/:advisee_id', Authorize('advisee'), AdviseesController.adviseeInformation, (err) => console.log(err));
+adviseesRouter.get('/:advisee_id/advisors', Authorize('advisee'), AdviseesController.advisorsForAdvisee, (err) => console.log(err));
 
 
 /**
