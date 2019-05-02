@@ -20,20 +20,27 @@ class APIInterface {
 
 	}
 
+
 	async getAdvisorInformation(advisor_id)
 	{
 		return axios.get(`advisors/${advisor_id}`)
 	}
 
+
+	async getAdvisorsForAdvisee(user_id){
+		return axios.get(`advisees/${user_id}/advisors`);
+	}
+
+
 	async getAdviseesForAdvisor(advsor_id)
 	{
 		return axios.get(`advisors/${advsor_id}/advisees`);
 	}
-	
+
+
 	async keepAlive() {
 		return axios.get('students/keep-alive');
 	}
 
 }
 export default APIInterface
-

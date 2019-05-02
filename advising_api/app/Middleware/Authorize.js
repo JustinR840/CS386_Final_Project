@@ -20,6 +20,7 @@ module.exports = (min_type) => {
             console.log("user not authorized");
             return false;
         }
+
         else if(min_type === 'admin' && user_type !== 'admin') {
             console.log("min type " + min_type + " !== " + user_type);
             console.log("user not authorized");

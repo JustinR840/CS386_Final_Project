@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header.js'
+import API from "../../APIInterface/APIInterface.js";
 
 import AdvisorView from '../Advisor/AdvisorView.js';
 import {Redirect, withRouter} from "react-router-dom";
@@ -10,6 +11,26 @@ class LandingPage extends Component
 	render()
 	{
 		let AdvisorNames = ['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc'];
+/*
+		const api = new API();
+
+		let userName = 'Erei';
+		let AdvisorNames = ['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc'];
+		let user_type = this.props.userType;
+		console.log("hi",this.props);
+
+		if(user_type === 'advisee'){
+			console.log('hi');
+			api.getAdvisor(this.props.user_id).then((info) =>
+			{
+				let advisor = info['data'];
+				console.log(advisor);
+			}).catch((error) =>
+			{
+				// What kind of error should be here?
+			});
+		}
+*/
 
 		if(this.props.location.state === null || this.props.location.state === undefined)
 		{
@@ -61,5 +82,6 @@ class LandingPage extends Component
 
 	}
 }
+
 
 export default withRouter(LandingPage);

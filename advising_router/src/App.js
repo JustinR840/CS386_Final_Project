@@ -19,6 +19,8 @@ class App extends Component
                 <Switch>
                     <Route exact path="/login" render={() => <LoginPage/>}/>
                     <Route exact path="/landing" render={() => <LandingPage/>}/>
+                    {/*<Route exact path="/landing" render={() => <LandingPage userType={this.state.user !== null ? this.state.user['role'] : "none"} user_id={this.state.user !== null? this.state.user['user_id'] : "none"}/>}/>*/}
+                    {/*<Route exact path="/login" render={() => <LoginPage setUser={this.setUser}/>}/> :*/}
                     <Route component={FourOFour}/>
                 </Switch>
 
