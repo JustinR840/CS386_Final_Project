@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './Header.js'
 
 import AdvisorView from '../Advisor/AdvisorView.js';
-import {Link, Redirect, withRouter} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 
 
 class LandingPage extends Component
@@ -10,6 +10,13 @@ class LandingPage extends Component
 	render()
 	{
 		let AdvisorNames = ['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc'];
+
+		if(this.props.location.state === null || this.props.location.state === undefined)
+		{
+			console.log("Location state is null, redirecting to /login");
+			return <Redirect to="/login"/>
+		}
+
 		let user = this.props.location.state.user;
 
 		// Check if user is logged in

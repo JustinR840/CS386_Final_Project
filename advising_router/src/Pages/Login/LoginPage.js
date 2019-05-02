@@ -12,7 +12,6 @@ class LoginPage extends Component
 		super(props);
 
 		this.state = {
-			setUser: this.props.setUser,
 			user_id: "",
 			password: "",
 			info_error: false,
@@ -48,7 +47,6 @@ class LoginPage extends Component
 				// TODO: Remove me
 				console.log("LOGIN SUCCESS");
 				console.log(info);
-				// this.state.setUser(user);
 				this.setState({user: user, info_error: false});
 			}
 			else
