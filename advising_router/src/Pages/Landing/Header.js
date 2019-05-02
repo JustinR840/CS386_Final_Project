@@ -36,7 +36,7 @@ function Header(props) {
 
 					<p className={classes.grow}/>
 
-					UR A {props.userType}, {props.userName}.
+					{props.userName} ({props.userType}).
 
 					<Avatar alt="Mr Erei" src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/14/1431c4dd8fa5afcd314cd5cdf78b9ad8d49556fb_full.jpg" className={classes.avatar} />
 

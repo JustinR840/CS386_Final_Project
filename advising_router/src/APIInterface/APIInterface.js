@@ -20,6 +20,11 @@ class APIInterface {
 
 	}
 
+	async getAdvisorInformation(advisor_id)
+	{
+		return axios.get(`advisors/${advisor_id}`)
+	}
+
 	async getAdviseesForAdvisor(advsor_id)
 	{
 		return axios.get(`advisors/${advsor_id}/advisees`);

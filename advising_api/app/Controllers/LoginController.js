@@ -30,7 +30,7 @@ class LoginController {
             }
 
             // Try and find the user in the DB.
-            let query = "SELECT * FROM advising_user WHERE user_id = ?";
+            let query = "SELECT au.user_id, au.password_hash, au.role, aa.advisor_fName AS a_fName, aa.advisor_lName AS a_lName, ads.student_fName AS s_fName, ads.student_lName AS s_lName FROM advising_user au LEFT JOIN advising_advisor aa ON au.user_id = aa.advisor_id LEFT JOIN advising_student ads ON au.user_id = ads.student_id WHERE user_id = ?";
             dbConnection.query(
                 {
                     sql: query,
@@ -49,11 +49,30 @@ class LoginController {
                         let try_password_hash = crypto.createHash('md5').update(tuples[0]['password_hash']).digest('hex');
                         if(try_password_hash === password_hash)
                         {
+                            let obj = {
+                                user_id: tuples[0]['user_id'],
+                                role: tuples[0]['role'],
+                                fName: "",
+                                lName: ""
+                            };
+
+                            if(obj['role'] === "advisor")
+                            {
+                                obj['fName'] = tuples[0]['a_fName'];
+                                obj['lName'] = tuples[0]['a_lName'];
+                            }
+                            else
+                            {
+                                obj['fName'] = tuples[0]['s_fName'];
+                                obj['lName'] = tuples[0]['s_lName'];
+                            }
+
+
                             // Give the requesting user an access token
-                            setAccessToken(ctx, tuples[0]);
+                            setAccessToken(ctx, obj);
                             ctx.body = {
                                 status: "OK",
-                                user: tuples[0],
+                                user: obj,
                             };
                         }
                         else

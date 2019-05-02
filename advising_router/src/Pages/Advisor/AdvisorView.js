@@ -28,7 +28,7 @@ class AdvisorView extends Component
 
 				if(arr !== null)
 				{
-					console.log(arr);
+					// console.log(arr);
 					this.setState({advisees: arr});
 				}
 				else
