@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header.js'
 import API from "../../APIInterface/APIInterface.js";
-import AdviseeView fro '../Advisee'
+import AdviseeView from '../Advisee/AdviseeView.js'
 import AdvisorView from '../Advisor/AdvisorView.js';
 import {Redirect, withRouter} from "react-router-dom";
 
@@ -20,19 +20,19 @@ class LandingPage extends Component
 		}
 
 		this.state = {
-			user: user
+			user: user,
+			userName: null,
+			headerOne: "Sessions",
+			headerTwo: "",
+			headerTwoItems: []
 		};
 	}
 
-
-	getUsername()
-	{
+	getUsername(){
 		// This is all just code to set the username next to the logout button.
 		let fName = this.state.user['fName'];
 		let lName = this.state.user['lName'];
-
 		let userName = "";
-
 		if(fName !== null)
 		{
 			userName += fName;
@@ -47,36 +47,75 @@ class LandingPage extends Component
 			// Fallback to using the user_id as a display name if fName is null.
 			userName = this.state.user['user_id'];
 		}
-
 		return userName;
 	}
+
+	componentDidMount ()
+	{
+		const api = new API();
+		if(this.state.user !== null)
+		{
+			let userName = this.getUsername();
+			console.log(userName);
+		  this.setState({userName: userName})
+			// Axios call
+			if(this.state.user['role']=== "advisee"){
+				console.log("A")
+				api.getAdvisorsForAdvisee(this.state.user['user_id']).then((info) =>
+				{
+					let arr = info['data'].map(a => new Object({advisor_id: a.advisor_id, advisor_fName: a.advisor_fName, advisor_lName: a.advisor_lName}));
+					if(arr !== null)
+					{
+						console.log("arr", arr);
+						let advisorNames = []
+						arr.forEach(element => {
+  						console.log(element);
+								advisorNames.push(element['advisor_fName'] + ' ' + element['advisor_lName'])
+						});
+						this.setState({headerTwoItems: advisorNames});
+					}
+					else
+					{
+						this.setState({headerTwoItems: []});
+					}
+				}).catch((error) =>
+				{
+				});
+
+			}
+			else{
+				console.log("B")
+			}
+		}
+	}
+
+
 
 
 	getHTMLToReturn(role)
 	{
-		let userName = this.getUsername();
 		let AdvisorNames = ['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc'];
 
 		if(role === "advisor")
 		{
 			return (
 				<div>
-					<Header menuName="Test Pls" itemNames={AdvisorNames} userName={userName} userType={this.state.user['role']}/>
+					<Header menuName="Test Pls" headerTwo="Advisees" itemNames={this.state.headerTwoItems} userName={this.state.userName} userType={this.state.user['role']}/>
 					<AdvisorView advisor={this.state.user}/>
 				</div>
 			);
 		}
 		else if(role === "advisee")
 		{
-			// TODO: CHANGE ME FOR ADVISEE
 			return (
 				<div>
-					<Header menuName="Test Pls" itemNames={AdvisorNames} userName={userName} userType={this.state.user['role']}/>
-					<AdviseeView advisor={this.state.user}/>
+					<Header menuName="Test Pls" headerTwo="Advisors" headerTwoItems={this.state.headerTwoItems} itemNames={this.state.headerTwoItems} userName={this.state.userName} userType={this.state.user['role']}/>
+					<AdviseeView advisee={this.state.user} advisors={this.state.advisors}/>
 				</div>
 			);
 		}
 	}
+
 
 	render()
 	{
@@ -98,7 +137,6 @@ class LandingPage extends Component
 			});
 		}
 */
-
 		// Check if user is logged in
 		if(this.state.user === null)
 		{

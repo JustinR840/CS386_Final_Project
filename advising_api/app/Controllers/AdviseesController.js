@@ -83,7 +83,8 @@ class AdviseesController {
 					ctx.status = 500;
 					return reject(error);
 				}
-				ctx.body = tuples[0];
+				console.log("tups: ", tuples)
+				ctx.body = tuples;
 				ctx.status = 200;
 				return resolve();
 			});

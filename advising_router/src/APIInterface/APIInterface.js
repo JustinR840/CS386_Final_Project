@@ -28,6 +28,7 @@ class APIInterface {
 
 
 	async getAdvisorsForAdvisee(user_id){
+		console.log("Getting advisors for ", user_id)
 		return axios.get(`advisees/${user_id}/advisors`);
 	}
 

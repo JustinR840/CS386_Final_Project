@@ -8,7 +8,6 @@ class AdviseeView extends Component
 	constructor(props)
 	{
 		super(props);
-
 		this.state = {
 			advisee: props.advisee,
 			advisors: []
@@ -20,25 +19,7 @@ class AdviseeView extends Component
 		if(this.state.advisee !== null)
 		{
 			// Axios call
-			let api = new API();
-
-			api.getAdvisorsForAdvisee(this.state.advisee['user_id']).then((info) =>
-			{
-				let arr = info['data'];
-
-				if(arr !== null)
-				{
-					// console.log(arr);
-					this.setState({advisors: arr});
-				}
-				else
-				{
-					this.setState({advisors: []});
-				}
-
-			}).catch((error) =>
-			{
-			});
+		
 		}
 	}
 

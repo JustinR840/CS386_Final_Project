@@ -32,7 +32,7 @@ function Header(props) {
 					<MenuListComposition menuName ={'Sessions'} itemNames={['Upcoming', 'Past', 'Cancelled', 'New']}/>
 
 					{/*Should reuse this component by passing in props for things such as menu name and options*/}
-					<MenuListComposition menuName ={'Advisors'} itemNames={props.itemNames}/>
+					<MenuListComposition menuName ={props.headerTwo} itemNames={props.itemNames}/>
 
 					<p className={classes.grow}/>
 

@@ -46,7 +46,7 @@ class LoginPage extends Component
 			{
 				// TODO: Remove me
 				console.log("LOGIN SUCCESS");
-				console.log(info);
+				console.log("info:", info);
 				this.setState({user: user, info_error: false});
 			}
 			else
