@@ -7,10 +7,11 @@ class AdviseeView extends Component
 {
 	constructor(props)
 	{
+		console.log("props: ", props)
 		super(props);
 		this.state = {
 			advisee: props.advisee,
-			advisors: []
+			advisors: props.advisors
 		};
 	}
 
@@ -18,8 +19,7 @@ class AdviseeView extends Component
 	{
 		if(this.state.advisee !== null)
 		{
-			// Axios call
-		
+
 		}
 	}
 

@@ -24,7 +24,8 @@ class LandingPage extends Component
 			userName: null,
 			headerOne: "Sessions",
 			headerTwo: "",
-			headerTwoItems: []
+			headerTwoItems: [],
+			items: [] //will contain advisees if user is an advisor, or advisors if user is advisee
 		};
 	}
 
@@ -60,31 +61,23 @@ class LandingPage extends Component
 		  this.setState({userName: userName})
 			// Axios call
 			if(this.state.user['role']=== "advisee"){
-				console.log("A")
 				api.getAdvisorsForAdvisee(this.state.user['user_id']).then((info) =>
 				{
 					let arr = info['data'].map(a => new Object({advisor_id: a.advisor_id, advisor_fName: a.advisor_fName, advisor_lName: a.advisor_lName}));
 					if(arr !== null)
 					{
-						console.log("arr", arr);
+						this.setState({items: arr});
 						let advisorNames = []
 						arr.forEach(element => {
-  						console.log(element);
 								advisorNames.push(element['advisor_fName'] + ' ' + element['advisor_lName'])
 						});
 						this.setState({headerTwoItems: advisorNames});
 					}
-					else
-					{
-						this.setState({headerTwoItems: []});
-					}
 				}).catch((error) =>
 				{
 				});
-
 			}
-			else{
-				console.log("B")
+			else if(this.state.user['role'] === "advisor"){
 			}
 		}
 	}
@@ -107,10 +100,11 @@ class LandingPage extends Component
 		}
 		else if(role === "advisee")
 		{
+				console.log("items", this.state.items);
 			return (
 				<div>
-					<Header menuName="Test Pls" headerTwo="Advisors" headerTwoItems={this.state.headerTwoItems} itemNames={this.state.headerTwoItems} userName={this.state.userName} userType={this.state.user['role']}/>
-					<AdviseeView advisee={this.state.user} advisors={this.state.advisors}/>
+					<Header menuName="Test Pls" headerTwo="Advisors" itemNames={this.state.headerTwoItems} userName={this.state.userName} userType={this.state.user['role']}/>
+					<AdviseeView advisee={this.state.user} advisors={this.state.items['advisor_id']}/>
 				</div>
 			);
 		}
