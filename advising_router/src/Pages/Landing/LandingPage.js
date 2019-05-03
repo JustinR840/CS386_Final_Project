@@ -4,6 +4,7 @@ import API from "../../APIInterface/APIInterface.js";
 
 import AdvisorView from '../Advisor/AdvisorView.js';
 import {Redirect, withRouter} from "react-router-dom";
+import AdvisorHeader from "./AdvisorHeader";
 
 
 class LandingPage extends Component
@@ -55,13 +56,12 @@ class LandingPage extends Component
 	getHTMLToReturn(role)
 	{
 		let userName = this.getUsername();
-		let AdvisorNames = ['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc'];
 
 		if(role === "advisor")
 		{
 			return (
 				<div>
-					<Header menuName="Test Pls" itemNames={AdvisorNames} userName={userName} userType={this.state.user['role']}/>
+					<AdvisorHeader menuName="Test Pls" itemNames={['My Advisees', 'All Advisees']} userName={userName} userInitials={"AB"} userType={this.state.user['role']} user={this.state.user}/>
 					<AdvisorView advisor={this.state.user}/>
 				</div>
 			);
@@ -71,7 +71,7 @@ class LandingPage extends Component
 			// TODO: CHANGE ME FOR ADVISEE
 			return (
 				<div>
-					<Header menuName="Test Pls" itemNames={AdvisorNames} userName={userName} userType={this.state.user['role']}/>
+					<Header menuName="Test Pls" itemNames={['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc']} userName={userName} userType={this.state.user['role']}/>
 					<AdvisorView advisor={this.state.user}/>
 				</div>
 			);

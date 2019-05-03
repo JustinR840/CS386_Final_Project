@@ -44,15 +44,12 @@ class LoginPage extends Component
 			let user = info['data']['user'];
 			if(user !== null)
 			{
-				// TODO: Remove me
-				console.log("LOGIN SUCCESS");
-				console.log(info);
+				// Login success
 				this.setState({user: user, info_error: false});
 			}
 			else
 			{
-				// TODO: Remove me
-				console.log("LOGIN FAIL");
+				// Login fail
 				this.setState({info_error: true});
 			}
 

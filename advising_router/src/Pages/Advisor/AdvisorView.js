@@ -41,15 +41,10 @@ class AdvisorView extends Component
 		}
 	}
 
-	showAdvises()
-	{
-		return this.state.advisees.map((v, idx) => <p>{v.student_id} {v.student_fName} {v.student_lName} {v.acad_plan} </p>);
-	}
-
 	render()
 	{
 		return (
-			<div>{this.showAdvises()}</div>
+			<div>AAAAA</div>
 		);
 	}
 }
