@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
 import API from "../../APIInterface/APIInterface.js";
-import Header from "../Landing/Header";
-import {withRouter} from "react-router-dom";
 
 
-class Advisees extends Component
+class My_Advisees extends Component
 {
 	constructor(props)
 	{
@@ -13,9 +11,9 @@ class Advisees extends Component
 
 		let user = null;
 
-		if(this.props.location.state !== null)
+		if(this.props.user !== null && this.props.user !== undefined)
 		{
-			user = this.props.location.state.user;
+			user = this.props.user;
 		}
 
 		this.state = {
@@ -51,11 +49,10 @@ class Advisees extends Component
 	{
 		return (
 			<div>
-				<Header menuName="Test Pls" itemNames={['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc']} userName={"asdf"} userType={"qwerty"}/>
 				<div>{this.showAdvises()}</div>
 			</div>
 		);
 	}
 }
 
-export default withRouter(Advisees);
+export default My_Advisees;

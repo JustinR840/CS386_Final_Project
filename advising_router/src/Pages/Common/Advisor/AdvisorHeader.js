@@ -5,7 +5,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Avatar from "@material-ui/core/Avatar";
-import MenuListComposition from "./MenuListComposition";
 import {green} from "@material-ui/core/colors";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -13,7 +12,6 @@ import Popper from "@material-ui/core/Popper";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import {Redirect} from "react-router-dom";
 
 const styles = theme => ({
 	root: {
@@ -32,11 +30,10 @@ const styles = theme => ({
 	},
 });
 
-class Header extends React.Component {
+class AdvisorHeader extends React.Component {
 	state = {
-		user: this.props.user,
-		open: false,
-		redirect_to: ""
+		changeMainView: this.props.changeMainView,
+		open: false
 	};
 
 	handleToggle = () => {
@@ -48,14 +45,51 @@ class Header extends React.Component {
 			return;
 		}
 
-		this.setState({ redirect_to: "/" + event.target.id, open: false });
+		// I don't think we have to worry about issues of double-updating state because header and
+		// main view are two completely separate elements.
+		this.state.changeMainView(event.target.id);
+
+		this.setState({ open: false });
 	};
+
+
+	handleClickAway = event => {
+		if (this.anchorEl.contains(event.target)) {
+			return;
+		}
+
+		this.setState({ open: false });
+	};
+
+
+	getUsername(user)
+	{
+		// This is all just code to set the username next to the logout button.
+		let fName = user['fName'];
+		let lName = user['lName'];
+		let userName = "";
+
+		if(fName !== null) {
+			userName += fName;
+			// Try appending lName to the userName also.
+			if(lName !== null)
+				userName += " " + lName;
+		} else
+			// Fallback to using the user_id as a display name if fName is null.
+			userName = user['user_id'];
+
+		return userName;
+	}
 
 
 	render()
 	{
-		const { classes } = this.props;
+		const { classes, user } = this.props;
 		const { open } = this.state;
+
+		let userName = user !== null ? this.getUsername(user) : "ERR NULL";
+		let userRole = user !== null ? user['role'] : "ERR NULL";
+		let userInitials = "AB";
 
 		return (
 			<div className={classes.root}>
@@ -63,15 +97,8 @@ class Header extends React.Component {
 					<Toolbar>
 
 						<div>
-							<Button
-								buttonRef={node => {
-									this.anchorEl = node;
-								}}
-								aria-owns={open ? 'menu-list-grow' : undefined}
-								aria-haspopup="true"
-								onClick={this.handleToggle}
-							>
-								Toggle Menu Grow
+							<Button buttonRef={node => {this.anchorEl = node;}} aria-owns={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={this.handleToggle}>
+								Advisees
 							</Button>
 							<Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
 								{({ TransitionProps, placement }) => (
@@ -81,7 +108,7 @@ class Header extends React.Component {
 										style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
 									>
 										<Paper>
-											<ClickAwayListener onClickAway={this.handleClose}>
+											<ClickAwayListener onClickAway={this.handleClickAway}>
 												<MenuList>
 													<MenuItem id="my_advisees" onClick={this.handleClose}>My Advisees</MenuItem>
 													<MenuItem id="all_advisees" onClick={this.handleClose}>All Advisees</MenuItem>
@@ -94,31 +121,20 @@ class Header extends React.Component {
 						</div>
 
 
-						{
-							this.state.redirect_to !== "" ?
-								<Redirect to={{
-									pathname: this.state.redirect_to,
-									state: {user: this.state.user}
-								}}/> :
-							""
-						}
-
-
-						{/*<MenuList menuName={"Sessions"}>*/}
-						{/*	<MenuItem onClick={console.log("hi")}>Upcoming</MenuItem>*/}
-						{/*	<MenuItem onClick={console.log("hi")}>Past</MenuItem>*/}
-						{/*	<MenuItem onClick={console.log("hi")}>Cancelled</MenuItem>*/}
-						{/*	<MenuItem onClick={console.log("hi")}>New</MenuItem>*/}
-						{/*</MenuList>*/}
-
-						{/*/!*Should reuse this component by passing in props for things such as menu name and options*!/*/}
-						{/*<MenuListComposition menuName ={'Advisees'} itemNames={this.props.itemNames}/>*/}
+						{/*{*/}
+							{/*this.state.redirect_to !== "" ?*/}
+								{/*<Redirect to={{*/}
+									{/*pathname: this.state.redirect_to,*/}
+									{/*state: {user: this.state.user}*/}
+								{/*}}/> :*/}
+							{/*""*/}
+						{/*}*/}
 
 						<p className={classes.grow}/>
 
-						{this.props.userName} ({this.props.userType})
+						{userName} ({userRole})
 
-						<Avatar className={classes.avatar}>{this.props.userInitials}</Avatar>
+						<Avatar className={classes.avatar}>{userInitials}</Avatar>
 
 						<Button color="inherit">Log Out</Button>
 					</Toolbar>
@@ -128,8 +144,8 @@ class Header extends React.Component {
 	}
 }
 
-Header.propTypes = {
+AdvisorHeader.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Header);
+export default withStyles(styles)(AdvisorHeader);
