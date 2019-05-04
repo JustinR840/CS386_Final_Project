@@ -18,21 +18,22 @@ class App extends Component
         this.setUser = this.setUser.bind(this);
     }
 
+    // Should only be called by the LoginPage component
     setUser(user)
     {
-        console.log("Setting user to: ");
-        console.log(user);
         this.setState({user: user});
     }
 
     getHTMLToReturn()
     {
+        // Check if a user is logged in, if not give them the LoginPage
         if(this.state.user === null)
         {
             return <LoginPage setUser={this.setUser}/>;
         }
         else
         {
+            // Determine if we need to give the LandingPage for an Advisor or Advisee
             let role = this.state.user['role'];
             if(role === "advisor")
             {

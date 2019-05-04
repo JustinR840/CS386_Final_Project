@@ -14,8 +14,7 @@ class LoginPage extends Component
 			setUser: props.setUser,
 			user_id: "",
 			password: "",
-			info_error: false,
-			user: null
+			info_error: false
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,7 +45,6 @@ class LoginPage extends Component
 			{
 				// Login success
 				this.state.setUser(user);
-				//this.setState({user: user, info_error: false});
 			}
 			else
 			{

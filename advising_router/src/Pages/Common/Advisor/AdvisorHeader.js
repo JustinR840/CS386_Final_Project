@@ -87,8 +87,8 @@ class AdvisorHeader extends React.Component {
 		const { classes, user } = this.props;
 		const { open } = this.state;
 
-		let userName = user !== null ? this.getUsername(user) : "ERR NULL";
-		let userRole = user !== null ? user['role'] : "ERR NULL";
+		let userName = this.getUsername(user);
+		let userRole = user['role'];
 		let userInitials = "AB";
 
 		return (
@@ -119,16 +119,6 @@ class AdvisorHeader extends React.Component {
 								)}
 							</Popper>
 						</div>
-
-
-						{/*{*/}
-							{/*this.state.redirect_to !== "" ?*/}
-								{/*<Redirect to={{*/}
-									{/*pathname: this.state.redirect_to,*/}
-									{/*state: {user: this.state.user}*/}
-								{/*}}/> :*/}
-							{/*""*/}
-						{/*}*/}
 
 						<p className={classes.grow}/>
 
