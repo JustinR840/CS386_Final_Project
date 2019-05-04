@@ -30,21 +30,34 @@ const styles = theme => ({
 	},
 });
 
-class AdvisorHeader extends React.Component {
-	state = {
-		changeMainView: this.props.changeMainView,
-		open: false
-	};
 
-	handleToggle = () => {
-		this.setState(state => ({ open: !state.open }));
+class AdvisorHeader extends React.Component {
+	constructor(props)
+	{
+		super(props);
+
+		this.state = {
+			changeMainView: props.changeMainView,
+			anchorE1: null,
+			open: false,
+			placement: null,
+			currentlyOpenMenu: ""
+		};
+	}
+
+	handleClick = placement => event =>
+	{
+		const { currentTarget } = event;
+
+		this.setState(state => ({
+			anchorEl: currentTarget,
+			open: state.placement !== placement || !state.open,
+			placement,
+			currentlyOpenMenu: currentTarget.id
+		}));
 	};
 
 	handleClose = event => {
-		if (this.anchorEl.contains(event.target)) {
-			return;
-		}
-
 		// I don't think we have to worry about issues of double-updating state because header and
 		// main view are two completely separate elements.
 		this.state.changeMainView(event.target.id);
@@ -54,10 +67,6 @@ class AdvisorHeader extends React.Component {
 
 
 	handleClickAway = event => {
-		if (this.anchorEl.contains(event.target)) {
-			return;
-		}
-
 		this.setState({ open: false });
 	};
 
@@ -82,10 +91,37 @@ class AdvisorHeader extends React.Component {
 	}
 
 
+	getCurrentMenuItems()
+	{
+		let currentlyOpenMenu = this.state.currentlyOpenMenu;
+
+		if(currentlyOpenMenu === "sessions")
+		{
+			return (
+				<div>
+					<MenuItem id="my_advisees" onClick={this.handleClose}>My Advisees</MenuItem>
+					<MenuItem id="all_advisees" onClick={this.handleClose}>All Advisees</MenuItem>
+				</div>
+			)
+		}
+		else if(currentlyOpenMenu === "advisees")
+		{
+			return (
+				<div>
+					<MenuItem id="upcoming_sessions" onClick={this.handleClose}>Upcoming Sessions</MenuItem>
+					<MenuItem id="past_sessions" onClick={this.handleClose}>Past Sessions</MenuItem>
+					<MenuItem id="future_sessions" onClick={this.handleClose}>Future Sessions</MenuItem>
+					<MenuItem id="all_sessions" onClick={this.handleClose}>All Sessions</MenuItem>
+				</div>
+			)
+		}
+	}
+
+
 	render()
 	{
-		const { classes, user } = this.props;
-		const { open } = this.state;
+		let { classes, user } = this.props;
+		let { anchorEl, open, placement } = this.state;
 
 		let userName = this.getUsername(user);
 		let userRole = user['role'];
@@ -96,29 +132,22 @@ class AdvisorHeader extends React.Component {
 				<AppBar position="static">
 					<Toolbar>
 
-						<div>
-							<Button buttonRef={node => {this.anchorEl = node;}} aria-owns={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={this.handleToggle}>
-								Advisees
-							</Button>
-							<Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
-								{({ TransitionProps, placement }) => (
-									<Grow
-										{...TransitionProps}
-										id="menu-list-grow"
-										style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-									>
-										<Paper>
-											<ClickAwayListener onClickAway={this.handleClickAway}>
-												<MenuList>
-													<MenuItem id="my_advisees" onClick={this.handleClose}>My Advisees</MenuItem>
-													<MenuItem id="all_advisees" onClick={this.handleClose}>All Advisees</MenuItem>
-												</MenuList>
-											</ClickAwayListener>
-										</Paper>
-									</Grow>
-								)}
-							</Popper>
-						</div>
+						<Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+							{({ TransitionProps }) => (
+								<Grow {...TransitionProps}>
+									<Paper>
+										<ClickAwayListener onClickAway={this.handleClickAway}>
+											<MenuList>
+												{this.getCurrentMenuItems()}
+											</MenuList>
+										</ClickAwayListener>
+									</Paper>
+								</Grow>
+							)}
+						</Popper>
+
+						<Button id="advisees" onClick={this.handleClick("bottom")}>Advisees</Button>
+						<Button id="sessions" onClick={this.handleClick("bottom")}>Sessions</Button>
 
 						<p className={classes.grow}/>
 
