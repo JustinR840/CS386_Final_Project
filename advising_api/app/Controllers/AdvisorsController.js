@@ -13,7 +13,6 @@ class AdvisorsController {
 			let query = `
                     CALL GetAllAdvisors()
                         `;
-			console.log('About to run this query.', query);
 			dbConnection.query({
 				sql: query
 			}, (error, tuples) => {
@@ -41,7 +40,6 @@ class AdvisorsController {
 			let query = `
                     CALL GetAdvisorInformation(?)
                         `;
-			console.log('About to run this query.', query);
 			dbConnection.query({
 				sql: query,
 				values: [ctx.params.advisor_id]
@@ -70,7 +68,6 @@ class AdvisorsController {
 			let query = `
                     CALL GetAdviseesForAdvisor(?)
                         `;
-			console.log('About to run this query.', query);
 			dbConnection.query({
 				sql: query,
 				values: [ctx.params.advisor_id]
