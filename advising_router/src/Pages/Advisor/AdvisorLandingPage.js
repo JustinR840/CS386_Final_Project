@@ -27,33 +27,6 @@ class AdvisorLandingPage extends Component
 	}
 
 
-	getUsername()
-	{
-		// This is all just code to set the username next to the logout button.
-		let fName = this.state.user['fName'];
-		let lName = this.state.user['lName'];
-
-		let userName = "";
-
-		if(fName !== null)
-		{
-			userName += fName;
-			// Try appending lName to the userName also.
-			if(lName !== null)
-			{
-				userName += " " + lName;
-			}
-		}
-		else
-		{
-			// Fallback to using the user_id as a display name if fName is null.
-			userName = this.state.user['user_id'];
-		}
-
-		return userName;
-	}
-
-
 	changeMainView(newView)
 	{
 		this.setState({current_main_view: newView})

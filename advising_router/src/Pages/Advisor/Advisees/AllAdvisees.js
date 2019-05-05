@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import API from "../../../APIInterface/APIInterface.js";
-import MaterialTable from "../MaterialTable.js";
+import PaginationTable from "../PaginationTable";
 
 
 class AllAdvisees extends Component
@@ -36,7 +36,7 @@ class AllAdvisees extends Component
 
 		return (
 			<div>
-				<MaterialTable headerNames={headerNames} rowIndexes={rowIndexes} rows={this.state.advisees}/>
+				<PaginationTable headerNames={headerNames} rowIndexes={rowIndexes} rows={this.state.advisees}/>
 			</div>
 		);
 	}
