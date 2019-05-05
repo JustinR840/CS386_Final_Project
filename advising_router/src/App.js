@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CSSBaseline from '@material-ui/core/CssBaseline';
 
 import LoginPage from './Pages/Login/LoginPage.js';
-import LandingPage from './Pages/Landing/LandingPage.js';
+import AdvisorLandingPage from "./Pages/Advisor/AdvisorLandingPage";
 
 
 class App extends Component
@@ -33,11 +33,11 @@ class App extends Component
         }
         else
         {
-            // Determine if we need to give the LandingPage for an Advisor or Advisee
+            // Determine if we need to give the AdvisorLandingPage for an Advisor or Advisee
             let role = this.state.user['role'];
             if(role === "advisor")
             {
-                return <LandingPage user={this.state.user}/>;
+                return <AdvisorLandingPage user={this.state.user}/>;
             }
             else if(role === "advisee")
             {

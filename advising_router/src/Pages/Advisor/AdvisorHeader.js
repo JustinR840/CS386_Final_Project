@@ -45,9 +45,10 @@ class AdvisorHeader extends React.Component {
 		};
 	}
 
-	handleClick = placement => event =>
+	handleClick = event =>
 	{
 		const { currentTarget } = event;
+		let placement = "bottom";
 
 		this.setState(state => ({
 			anchorEl: currentTarget,
@@ -93,7 +94,7 @@ class AdvisorHeader extends React.Component {
 
 	getCurrentMenuItems()
 	{
-		let currentlyOpenMenu = this.state.currentlyOpenMenu;
+		let { currentlyOpenMenu } = this.state;
 
 		if(currentlyOpenMenu === "sessions")
 		{
@@ -146,8 +147,8 @@ class AdvisorHeader extends React.Component {
 							)}
 						</Popper>
 
-						<Button id="advisees" onClick={this.handleClick("bottom")}>Advisees</Button>
-						<Button id="sessions" onClick={this.handleClick("bottom")}>Sessions</Button>
+						<Button id="advisees" onClick={this.handleClick}>Sessions</Button>
+						<Button id="sessions" onClick={this.handleClick}>Advisees</Button>
 
 						<p className={classes.grow}/>
 

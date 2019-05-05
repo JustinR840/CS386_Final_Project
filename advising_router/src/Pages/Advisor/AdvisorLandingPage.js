@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import Header from './Header.js'
-
 
 import AdvisorHeader from "../Advisor/AdvisorHeader";
-import MyAdvisees from "../Advisor/Advisees/MyAdvisees.js";
-import AllAdvisees from "../Advisor/Advisees/AllAdvisees";
+import MyAdvisees from "./Advisees/MyAdvisees.js";
+import AllAdvisees from "./Advisees/AllAdvisees";
 
 
-class LandingPage extends Component
+class AdvisorLandingPage extends Component
 {
 	constructor(props)
 	{
@@ -91,7 +89,8 @@ class LandingPage extends Component
 			// TODO: CHANGE ME FOR ADVISEE
 			return (
 				<div>
-					<Header menuName="Test Pls" itemNames={['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc']} userName={this.getUsername()} userType={this.state.user['role']}/>
+					<h2>I AM ADVISEE HEADER</h2>
+					{/*<Header menuName="Test Pls" itemNames={['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc']} userName={this.getUsername()} userType={this.state.user['role']}/>*/}
 					<h3>I AM AN ADVISEE VIEW</h3>
 				</div>
 			);
@@ -109,4 +108,4 @@ class LandingPage extends Component
 }
 
 
-export default LandingPage;
+export default AdvisorLandingPage;
