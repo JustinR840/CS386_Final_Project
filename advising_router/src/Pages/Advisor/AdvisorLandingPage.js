@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import AdvisorHeader from "../Advisor/AdvisorHeader";
 import MyAdvisees from "./Advisees/MyAdvisees.js";
 import AllAdvisees from "./Advisees/AllAdvisees";
+import AllSessions from "./Sessions/AllSessions.js";
+import EditSessions from "./Sessions/EditSessions";
 
 
 class AdvisorLandingPage extends Component
@@ -20,7 +22,7 @@ class AdvisorLandingPage extends Component
 
 		this.state = {
 			user: user,
-			current_main_view: "none"
+			current_main_view: "upcoming_sessions"
 		};
 
 		this.changeMainView = this.changeMainView.bind(this);
@@ -41,6 +43,16 @@ class AdvisorLandingPage extends Component
 			return <MyAdvisees user={this.state.user}/>;
 		else if(current_main_view === "all_advisees")
 			return <AllAdvisees/>;
+		else if(current_main_view === "upcoming_sessions")
+			return <h3>UPCOMING SESSIONS</h3>;
+		else if(current_main_view === "past_sessions")
+			return <h3>PAST SESSIONS</h3>;
+		else if(current_main_view === "future_sessions")
+			return <h3>FUTURE SESSIONS</h3>;
+		else if(current_main_view === "all_sessions")
+			return <AllSessions user={this.state.user}/>;
+		else if(current_main_view === "edit_sessions")
+			return <EditSessions user={this.state.user}/>;
 		else
 			return <h3>NO MAIN VIEW LOADED</h3>;
 	}

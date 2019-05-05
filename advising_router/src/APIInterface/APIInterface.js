@@ -19,6 +19,10 @@ class APIInterface {
 
 	}
 
+	async getAllSessionsForAdvisor(advisor_id)
+	{
+		return axios.get(`advisors/${advisor_id}/sessions`);
+	}
 
 	async getAllAdvisees()
 	{

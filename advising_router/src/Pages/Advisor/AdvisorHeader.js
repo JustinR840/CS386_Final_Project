@@ -109,6 +109,7 @@ class AdvisorHeader extends React.Component {
 		{
 			return (
 				<div>
+					<MenuItem id="edit_sessions" onClick={this.handleClose}>Edit Sessions</MenuItem>
 					<MenuItem id="upcoming_sessions" onClick={this.handleClose}>Upcoming Sessions</MenuItem>
 					<MenuItem id="past_sessions" onClick={this.handleClose}>Past Sessions</MenuItem>
 					<MenuItem id="future_sessions" onClick={this.handleClose}>Future Sessions</MenuItem>
