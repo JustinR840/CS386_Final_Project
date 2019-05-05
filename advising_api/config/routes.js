@@ -58,6 +58,7 @@ advisorsRouter.use(VerifyJWT);
 advisorsRouter.get('/', Authorize('advisor'), AdvisorsController.allAdvisors, (err) => console.log(err));
 advisorsRouter.get('/:advisor_id', Authorize('advisor'), AdvisorsController.advisorInformation, (err) => console.log(err));
 advisorsRouter.get('/:advisor_id/advisees', Authorize('advisor'), AdvisorsController.adviseesForAdvisor, (err) => console.log(err));
+advisorsRouter.get('/:advisor_id/sessions', Authorize('advisor'), AdvisorsController.sessionsForAdvisor, (err) => console.log(err));
 
 
 /**
