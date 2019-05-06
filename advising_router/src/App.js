@@ -3,6 +3,7 @@ import CSSBaseline from '@material-ui/core/CssBaseline';
 
 import LoginPage from './Pages/Login/LoginPage.js';
 import AdvisorLandingPage from "./Pages/Advisor/AdvisorLandingPage";
+import AdviseeLandingPage from "./Pages/Advisee/AdviseeLandingPage";
 
 
 class App extends Component
@@ -41,7 +42,7 @@ class App extends Component
             }
             else if(role === "advisee")
             {
-                return <h3>ADIVSEE VIEW</h3>;
+                  return <AdviseeLandingPage user={this.state.user}/>;
             }
         }
     }
