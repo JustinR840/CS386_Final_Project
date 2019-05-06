@@ -37,7 +37,7 @@ class APIInterface {
 	{
 		return axios.get(`advisors/${advisor_id}/sessions`);
 	}
-	
+
 	async getAdviseeUpcomingSessions(user_id){
 		return axios.get(`advisees/${user_id}/sessions`);
 	}
