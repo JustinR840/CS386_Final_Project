@@ -50,8 +50,8 @@ class EditSessions extends Component
 
 	render()
 	{
-		let headerNames = ['EDIT', 'advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
-		let rowIndexes = ['edit_button', 'advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
+		let headerNames = ['EDIT', 'status', 'advisor_id', 'student_id', 'start_time', 'end_time', 'session_id', 'block_id', 'locked', 'num_sessions', 'notes'];
+		let rowIndexes  = ['edit', 'status', 'advisor_id', 'student_id', 'start_time', 'end_time', 'session_id', 'block_id', 'locked', 'num_sessions', 'notes'];
 
 		return (
 			<div>

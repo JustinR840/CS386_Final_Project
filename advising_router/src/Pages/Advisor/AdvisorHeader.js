@@ -117,6 +117,15 @@ class AdvisorHeader extends React.Component {
 				</div>
 			)
 		}
+		else if(currentlyOpenMenu === "blocks")
+		{
+			return (
+				<div>
+					<MenuItem id="view_blocks" onClick={this.handleClose}>View Advising Blocks</MenuItem>
+					<MenuItem id="create_blocks" onClick={this.handleClose}>Create Advising Blocks</MenuItem>
+				</div>
+			)
+		}
 	}
 
 
@@ -149,6 +158,7 @@ class AdvisorHeader extends React.Component {
 						</Popper>
 
 						<Button id="advisees" onClick={this.handleClick}>Sessions</Button>
+						<Button id="blocks" onClick={this.handleClick}>Blocks</Button>
 						<Button id="sessions" onClick={this.handleClick}>Advisees</Button>
 
 						<p className={classes.grow}/>

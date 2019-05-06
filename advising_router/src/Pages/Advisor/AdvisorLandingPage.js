@@ -5,6 +5,8 @@ import MyAdvisees from "./Advisees/MyAdvisees.js";
 import AllAdvisees from "./Advisees/AllAdvisees";
 import AllSessions from "./Sessions/AllSessions.js";
 import EditSessions from "./Sessions/EditSessions";
+import MyBlocks from "./Blocks/MyBlocks";
+import BlockCreator from "./Blocks/BlockCreator";
 
 
 class AdvisorLandingPage extends Component
@@ -53,6 +55,10 @@ class AdvisorLandingPage extends Component
 			return <AllSessions user={this.state.user}/>;
 		else if(current_main_view === "edit_sessions")
 			return <EditSessions user={this.state.user}/>;
+		else if(current_main_view === "view_blocks")
+			return <MyBlocks user={this.state.user}/>;
+		else if(current_main_view === "create_blocks")
+			return <BlockCreator user={this.state.user}/>;
 		else
 			return <h3>NO MAIN VIEW LOADED</h3>;
 	}

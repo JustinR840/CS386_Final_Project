@@ -40,7 +40,7 @@ class SessionEditor extends Component
 		return (
 			<div>
 				{rowIndexes.map((v, idx) =>
-					<p>{session[v]}</p>
+					<p key={idx}>{session[v]}</p>
 				)}
 				<Button variant="contained" onClick={doneEditingSession}>Done Editing</Button>
 			</div>

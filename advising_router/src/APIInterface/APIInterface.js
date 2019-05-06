@@ -19,6 +19,16 @@ class APIInterface {
 
 	}
 
+	async createNewBlock(advisor_id, block_information)
+	{
+		return axios.post(`advisors/${advisor_id}/blocks`, block_information);
+	}
+
+	async getAdvisorAdvisingBlocks(advisor_id)
+	{
+		return axios.get(`advisors/${advisor_id}/blocks`);
+	}
+
 	async getAllSessionsForAdvisor(advisor_id)
 	{
 		return axios.get(`advisors/${advisor_id}/sessions`);
