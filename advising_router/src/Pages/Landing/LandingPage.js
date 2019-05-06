@@ -26,7 +26,8 @@ class LandingPage extends Component
 			headerOne: "Sessions",
 			headerTwo: "",
 			headerTwoItems: [],
-			items: [] //will contain advisees if user is an advisor, or advisors if user is advisee
+			items: [], //will contain advisees if user is an advisor, or advisors if user is advisee
+			upcoming: []
 		};
 	}
 
@@ -75,7 +76,9 @@ class LandingPage extends Component
 				}).catch((error) =>
 				{
 				});
+				//get list of all booked Sessions
 
+				//get list of all available sessions
 			}
 			else if(this.state.user['role'] === "advisor"){
 			}
@@ -100,13 +103,10 @@ class LandingPage extends Component
 		}
 		else if(role === "advisee")
 		{
-				let items = this.state.items;
-				console.log("items", items[0]);
-				console.log()
 			return (
 				<div>
 					<AdviseeHeader menuName="Test Pls" headerTwo="Advisors" itemNames={this.state.headerTwoItems} userName={this.state.userName} userType={this.state.user['role']}/>
-					<AdviseeView advisee={this.state.user} advisors={items} test="test"/>
+					<AdviseeView advisee={this.state.user} advisors={this.state.items} test="test"/>
 				</div>
 			);
 		}

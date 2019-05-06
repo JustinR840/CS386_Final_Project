@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 
 import API from "../../APIInterface/APIInterface.js";
-
+import Table from "../../Table"
 
 class AdviseeView extends Component
 {
 	constructor(props)
 	{
-		console.log("props: ", props)
 		super(props);
 		this.state = {
 			advisee: props.advisee,
-			advisors: props.advisors
+			advisors: props.advisors,
+			upcoming: props.upcoming,
+			past: props.past,
+			cancelled: props.cancelled,
+			showing: "upcoming"
 		};
 	}
 
@@ -19,17 +22,23 @@ class AdviseeView extends Component
 	{
 		if(this.state.advisee !== null)
 		{
-
 		}
 	}
 
 	showAdvisors()
 	{
-		return this.state.advisors.map((v, idx) => <p>{v.advisor_id} {v.advisor_fName} {v.advisor_lName}</p>);
+		return this.props.advisors.map((v, idx) => <p>{v.advisor_id} {v.advisor_fName} {v.advisor_lName}</p>);
 	}
+
+/*
+	showUpcoming(){
+		return this.props.upcoming.map((v, idx) => <p>{v.start_time} {v.advisor_fName} {v.advisor_lName}</p>);
+	}
+	*/
 
 	render()
 	{
+
 		return (
 			<div>{this.showAdvisors()}</div>
 		);

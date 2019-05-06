@@ -29,7 +29,7 @@ function AdviseeHeader(props) {
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
-					<MenuListComposition menuName ={'Sessions'} itemNames={['Upcoming', 'Past', 'Cancelled', 'New']}/>
+					<MenuListComposition menuName ={'Sessions'} itemNames={['Upcoming', 'Past', 'Cancelled']}/>
 
 					{/*Should reuse this component by passing in props for things such as menu name and options*/}
 					<MenuListComposition menuName ={props.headerTwo} itemNames={props.itemNames}/>
