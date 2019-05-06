@@ -22,7 +22,7 @@ const styles = theme => ({
 	},
 });
 
-function Header(props) {
+function AdviseeHeader(props) {
 	const { classes } = props;
 
 	return (
@@ -47,8 +47,8 @@ function Header(props) {
 	);
 }
 
-Header.propTypes = {
+AdviseeHeader.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Header);
+export default withStyles(styles)(AdviseeHeader);

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Header from './Header.js'
-
 
 import AdvisorHeader from "../Advisor/AdvisorHeader";
 import MyAdvisees from "../Advisor/Advisees/MyAdvisees.js";
 import AllAdvisees from "../Advisor/Advisees/AllAdvisees";
+import AdviseeHeader from "./AdviseeHeader";
+import AdviseeView from "../Advisee/AdviseeView";
 
 
 class LandingPage extends Component
@@ -34,7 +34,6 @@ class LandingPage extends Component
 		// This is all just code to set the username next to the logout button.
 		let fName = this.state.user['fName'];
 		let lName = this.state.user['lName'];
-
 		let userName = "";
 
 		if(fName !== null)
@@ -75,6 +74,39 @@ class LandingPage extends Component
 	}
 
 
+	componentDidMount ()
+	{
+		const api = new API();
+		if(this.state.user !== null)
+		{
+			// Axios call
+			if(this.state.user['role']=== "advisee"){
+				api.getAdvisorsForAdvisee(this.state.user['user_id']).then((info) =>
+				{
+					let arr = info['data'].map(a => new Object({advisor_id: a.advisor_id, advisor_fName: a.advisor_fName, advisor_lName: a.advisor_lName}));
+					if(arr !== null)
+					{
+						let advisorNames = []
+						arr.forEach(element => {
+								advisorNames.push(element['advisor_fName'] + ' ' + element['advisor_lName'])
+						});
+						let userName = this.getUsername();
+						console.log(userName);
+						this.setState({userName: userName, items:arr, headerTwoItems: advisorNames})
+					}
+				}).catch((error) =>
+				{
+				});
+
+			}
+			else if(this.state.user['role'] === "advisor"){
+			}
+		}
+	}
+
+
+
+
 	getHTMLToReturn(role)
 	{
 		if(role === "advisor")
@@ -88,15 +120,18 @@ class LandingPage extends Component
 		}
 		else if(role === "advisee")
 		{
-			// TODO: CHANGE ME FOR ADVISEE
+				let items = this.state.items;
+				console.log("items", items[0]);
+				console.log()
 			return (
 				<div>
-					<Header menuName="Test Pls" itemNames={['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc']} userName={this.getUsername()} userType={this.state.user['role']}/>
-					<h3>I AM AN ADVISEE VIEW</h3>
+					<AdviseeHeader menuName="Test Pls" headerTwo="Advisors" itemNames={this.state.headerTwoItems} userName={this.state.userName} userType={this.state.user['role']}/>
+					<AdviseeView advisee={this.state.user} advisors={items} test="test"/>
 				</div>
 			);
 		}
 	}
+
 
 	render()
 	{
