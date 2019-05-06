@@ -30,13 +30,24 @@ class APIInterface {
 	}
 
 	async getAdvisorsForAdvisee(user_id){
-		console.log("Getting advisors for ", user_id)
 		return axios.get(`advisees/${user_id}/advisors`);
 	}
 
 	async getAllSessionsForAdvisor(advisor_id)
 	{
 		return axios.get(`advisors/${advisor_id}/sessions`);
+	}
+	
+	async getAdviseeUpcomingSessions(user_id){
+		return axios.get(`advisees/${user_id}/sessions`);
+	}
+
+	async getAdviseePastSessions(user_id){
+		return axios.get(`advisees/${user_id}/pastsessions`);
+	}
+
+	async getAdviseeCancelledSessions(user_id){
+		return axios.get(`advisees/${user_id}/cancelledsessions`)
 	}
 
 	async getAllAdvisees()
