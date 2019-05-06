@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import Header from './Header.js'
-import API from "../../APIInterface/APIInterface.js";
 
-import AdvisorView from '../Advisor/AdvisorView.js';
-import {Redirect, withRouter} from "react-router-dom";
+import AdvisorHeader from "../Advisor/AdvisorHeader";
+import MyAdvisees from "../Advisor/Advisees/MyAdvisees.js";
+import AllAdvisees from "../Advisor/Advisees/AllAdvisees";
+import AdviseeHeader from "./AdviseeHeader";
+import AdviseeView from "../Advisee/AdviseeView";
 
 
 class LandingPage extends Component
@@ -14,14 +15,23 @@ class LandingPage extends Component
 
 		let user = null;
 
-		if(this.props.location.state !== null)
+		if(this.props.user !== null && this.props.user !== undefined)
 		{
-			user = this.props.location.state.user;
+			user = this.props.user;
 		}
 
 		this.state = {
-			user: user
+			user: user,
+			current_main_view: "none",
+			userName: null,
+			headerOne: "Sessions",
+			headerTwo: "",
+			headerTwoItems: [],
+			items: [], //will contain advisees if user is an advisor, or advisors if user is advisee
+			upcoming: []
 		};
+
+		this.changeMainView = this.changeMainView.bind(this);
 	}
 
 
@@ -30,7 +40,6 @@ class LandingPage extends Component
 		// This is all just code to set the username next to the logout button.
 		let fName = this.state.user['fName'];
 		let lName = this.state.user['lName'];
-
 		let userName = "";
 
 		if(fName !== null)
@@ -52,72 +61,92 @@ class LandingPage extends Component
 	}
 
 
+	changeMainView(newView)
+	{
+		this.setState({current_main_view: newView})
+	}
+
+
+	whatMainView()
+	{
+		let current_main_view = this.state.current_main_view;
+
+		if(current_main_view === "my_advisees")
+			return <MyAdvisees user={this.state.user}/>;
+		else if(current_main_view === "all_advisees")
+			return <AllAdvisees/>;
+		else
+			return <h3>NO MAIN VIEW LOADED</h3>;
+	}
+
+
+	componentDidMount ()
+	{
+		const api = new API();
+		if(this.state.user !== null)
+		{
+			// Axios call
+			if(this.state.user['role']=== "advisee"){
+				api.getAdvisorsForAdvisee(this.state.user['user_id']).then((info) =>
+				{
+					let arr = info['data'].map(a => new Object({advisor_id: a.advisor_id, advisor_fName: a.advisor_fName, advisor_lName: a.advisor_lName}));
+					if(arr !== null)
+					{
+						let advisorNames = []
+						arr.forEach(element => {
+								advisorNames.push(element['advisor_fName'] + ' ' + element['advisor_lName'])
+						});
+						let userName = this.getUsername();
+						console.log(userName);
+						this.setState({userName: userName, items:arr, headerTwoItems: advisorNames})
+					}
+				}).catch((error) =>
+				{
+				});
+				//get list of all booked Sessions
+
+				//get list of all available sessions
+			}
+			else if(this.state.user['role'] === "advisor"){
+			}
+		}
+	}
+
+
+
+
 	getHTMLToReturn(role)
 	{
-		let userName = this.getUsername();
-		let AdvisorNames = ['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc'];
-
 		if(role === "advisor")
 		{
 			return (
 				<div>
-					<Header menuName="Test Pls" itemNames={AdvisorNames} userName={userName} userType={this.state.user['role']}/>
-					<AdvisorView advisor={this.state.user}/>
+					<AdvisorHeader menuName="AdvisorHeader" user={this.state.user} changeMainView={this.changeMainView}/>
+					{this.whatMainView()}
 				</div>
 			);
 		}
 		else if(role === "advisee")
 		{
-			// TODO: CHANGE ME FOR ADVISEE
 			return (
 				<div>
-					<Header menuName="Test Pls" itemNames={AdvisorNames} userName={userName} userType={this.state.user['role']}/>
-					<AdvisorView advisor={this.state.user}/>
+					<AdviseeHeader menuName="Test Pls" headerTwo="Advisors" itemNames={this.state.headerTwoItems} userName={this.state.userName} userType={this.state.user['role']}/>
+					<AdviseeView advisee={this.state.user} advisors={this.state.items} test="test"/>
 				</div>
 			);
 		}
 	}
 
+
 	render()
 	{
-/*
-		const api = new API();
-
-		let userName = 'Erei';
-		let AdvisorNames = ['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc'];
-		let user_type = this.props.userType;
-		console.log("hi",this.props);
-
-		if(user_type === 'advisee'){
-			console.log('hi');
-			api.getAdvisor(this.props.user_id).then((info) =>
-			{
-				let advisor = info['data'];
-				console.log(advisor);
-			}).catch((error) =>
-			{
-				// What kind of error should be here?
-			});
-		}
-*/
-
-		// Check if user is logged in
-		if(this.state.user === null)
-		{
-			console.log("User is null, redirecting to /login");
-			// If user is not logged in, redirect them to the login page
-			return <Redirect to="/login"/>;
-		}
-
 		return (
 			<div>
-				{
-					this.getHTMLToReturn(this.state.user['role'])
-				}
+				{this.getHTMLToReturn(this.state.user['role'])}
 			</div>
 		);
 	}
 }
 
 
-export default withRouter(LandingPage);
+export default LandingPage;

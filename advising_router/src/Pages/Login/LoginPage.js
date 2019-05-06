@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import LoginBox from "./LoginBox.js"
 import API from "../../APIInterface/APIInterface.js";
-import {Redirect} from "react-router-dom";
 
 
 class LoginPage extends Component
@@ -12,10 +11,10 @@ class LoginPage extends Component
 		super(props);
 
 		this.state = {
+			setUser: props.setUser,
 			user_id: "",
 			password: "",
-			info_error: false,
-			user: null
+			info_error: false
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -44,15 +43,12 @@ class LoginPage extends Component
 			let user = info['data']['user'];
 			if(user !== null)
 			{
-				// TODO: Remove me
-				console.log("LOGIN SUCCESS");
-				console.log(info);
-				this.setState({user: user, info_error: false});
+				// Login success
+				this.state.setUser(user);
 			}
 			else
 			{
-				// TODO: Remove me
-				console.log("LOGIN FAIL");
+				// Login fail
 				this.setState({info_error: true});
 			}
 
@@ -64,12 +60,7 @@ class LoginPage extends Component
 
 	render()
 	{
-		return this.state.user !== null ?
-					<Redirect to={{
-						pathname: '/landing',
-						state: {user: this.state.user}
-					}}/> :
-					<LoginBox handleSubmit={this.handleSubmit} handleInputChange={this.handleInputChange} info_error={this.state.info_error}/>
+		return <LoginBox handleSubmit={this.handleSubmit} handleInputChange={this.handleInputChange} info_error={this.state.info_error}/>;
 	}
 }
 

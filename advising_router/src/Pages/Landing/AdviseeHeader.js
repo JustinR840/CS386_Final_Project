@@ -22,14 +22,14 @@ const styles = theme => ({
 	},
 });
 
-function Header(props) {
+function AdviseeHeader(props) {
 	const { classes } = props;
 
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
-					<MenuListComposition menuName ={'Sessions'} itemNames={['Upcoming', 'Past', 'Cancelled', 'New']}/>
+					<MenuListComposition menuName ={'Sessions'} itemNames={['Upcoming', 'Past', 'Cancelled']}/>
 
 					{/*Should reuse this component by passing in props for things such as menu name and options*/}
 					<MenuListComposition menuName ={props.headerTwo} itemNames={props.itemNames}/>
@@ -47,8 +47,8 @@ function Header(props) {
 	);
 }
 
-Header.propTypes = {
+AdviseeHeader.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Header);
+export default withStyles(styles)(AdviseeHeader);

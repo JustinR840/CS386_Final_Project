@@ -43,7 +43,9 @@ adviseesRouter.use(VerifyJWT);
 adviseesRouter.get('/', Authorize('advisee'), AdviseesController.allAdvisees, (err) => console.log(err));
 adviseesRouter.get('/:advisee_id', Authorize('advisee'), AdviseesController.adviseeInformation, (err) => console.log(err));
 adviseesRouter.get('/:advisee_id/advisors', Authorize('advisee'), AdviseesController.advisorsForAdvisee, (err) => console.log(err));
-
+adviseesRouter.get('/:advisee_id/sessions', Authorize('advisee'), AdviseesController.adviseeUpcomingSessions, (err) => console.log(err));
+adviseesRouter.get('/:advisee_id/pastsessions', Authorize('advisee'), AdviseesController.adviseePastSessions, (err) => console.log(err));
+adviseesRouter.get('/:advisee_id/cancelledsessions', Authorize('advisee'), AdviseesController.adviseeCancelledSessions, (err) => console.log(err));
 
 /**
  * Advisors controller
@@ -58,6 +60,9 @@ advisorsRouter.use(VerifyJWT);
 advisorsRouter.get('/', Authorize('advisor'), AdvisorsController.allAdvisors, (err) => console.log(err));
 advisorsRouter.get('/:advisor_id', Authorize('advisor'), AdvisorsController.advisorInformation, (err) => console.log(err));
 advisorsRouter.get('/:advisor_id/advisees', Authorize('advisor'), AdvisorsController.adviseesForAdvisor, (err) => console.log(err));
+advisorsRouter.get('/:advisor_id/sessions', Authorize('advisor'), AdvisorsController.sessionsForAdvisor, (err) => console.log(err));
+advisorsRouter.get('/:advisor_id/blocks', Authorize('advisor'), AdvisorsController.blocksForAdvisor, (err) => console.log(err));
+//advisorsRouter.get('/:advisor_id/blocks', Authorize('advisor'), AdvisorsController.blocksForAdvisor, (err) => console.log(err));
 
 
 /**
