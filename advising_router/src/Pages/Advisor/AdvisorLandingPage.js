@@ -68,7 +68,7 @@ class AdvisorLandingPage extends Component
 	{
 		return (
 			<div>
-				<AdvisorHeader menuName="AdvisorHeader" user={this.state.user} changeMainView={this.changeMainView}/>
+				<AdvisorHeader menuName="AdvisorHeader" user={this.state.user} changeMainView={this.changeMainView} setUser={this.props.setUser}/>
 				{this.whatMainView()}
 			</div>
 		);

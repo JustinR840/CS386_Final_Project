@@ -38,7 +38,7 @@ class App extends Component
             let role = this.state.user['role'];
             if(role === "advisor")
             {
-                return <AdvisorLandingPage user={this.state.user}/>;
+                return <AdvisorLandingPage user={this.state.user} setUser={this.setUser}/>;
             }
             else if(role === "advisee")
             {

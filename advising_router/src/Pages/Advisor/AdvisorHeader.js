@@ -94,9 +94,9 @@ class AdvisorHeader extends React.Component {
 
 	getCurrentMenuItems()
 	{
-		let { currentlyOpenMenu } = this.state;
+		let {currentlyOpenMenu} = this.state;
 
-		if(currentlyOpenMenu === "sessions")
+		if (currentlyOpenMenu === "sessions")
 		{
 			return (
 				<div>
@@ -105,7 +105,7 @@ class AdvisorHeader extends React.Component {
 				</div>
 			)
 		}
-		else if(currentlyOpenMenu === "advisees")
+		else if (currentlyOpenMenu === "advisees")
 		{
 			return (
 				<div>
@@ -117,7 +117,7 @@ class AdvisorHeader extends React.Component {
 				</div>
 			)
 		}
-		else if(currentlyOpenMenu === "blocks")
+		else if (currentlyOpenMenu === "blocks")
 		{
 			return (
 				<div>
@@ -131,7 +131,7 @@ class AdvisorHeader extends React.Component {
 
 	render()
 	{
-		let { classes, user } = this.props;
+		let { classes, user, setUser } = this.props;
 		let { anchorEl, open, placement } = this.state;
 
 		let userName = this.getUsername(user);
@@ -167,7 +167,7 @@ class AdvisorHeader extends React.Component {
 
 						<Avatar className={classes.avatar}>{userInitials}</Avatar>
 
-						<Button color="inherit">Log Out</Button>
+						<Button color="inherit" onClick={() => setUser(null)}>Log Out</Button>
 					</Toolbar>
 				</AppBar>
 			</div>
