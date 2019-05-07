@@ -36,7 +36,6 @@ class AdvisorLandingPage extends Component
 		this.setState({current_main_view: newView})
 	}
 
-
 	whatMainView()
 	{
 		let current_main_view = this.state.current_main_view;
@@ -63,36 +62,12 @@ class AdvisorLandingPage extends Component
 			return <h3>NO MAIN VIEW LOADED</h3>;
 	}
 
-
-	getHTMLToReturn(role)
-	{
-		if(role === "advisor")
-		{
-			return (
-				<div>
-					<AdvisorHeader menuName="AdvisorHeader" user={this.state.user} changeMainView={this.changeMainView}/>
-					{this.whatMainView()}
-				</div>
-			);
-		}
-		else if(role === "advisee")
-		{
-			// TODO: CHANGE ME FOR ADVISEE
-			return (
-				<div>
-					<h2>I AM ADVISEE HEADER</h2>
-					{/*<Header menuName="Test Pls" itemNames={['Dr. Zik', 'Dr. Yolopanther', 'Dr. Doc']} userName={this.getUsername()} userType={this.state.user['role']}/>*/}
-					<h3>I AM AN ADVISEE VIEW</h3>
-				</div>
-			);
-		}
-	}
-
 	render()
 	{
 		return (
 			<div>
-				{this.getHTMLToReturn(this.state.user['role'])}
+				<AdvisorHeader menuName = "AdvisorHeader" user={this.state.user} changeMainView={this.changeMainView}/>
+				{this.whatMainView()}
 			</div>
 		);
 	}

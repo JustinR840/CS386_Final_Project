@@ -12,8 +12,10 @@ class LoginController {
         return new Promise((resolve, reject) => {
 
             // Username and password will be in the headers
-            let user_id = ctx.request.headers['user_id'];
-            let password_hash = ctx.request.headers['password_hash'];
+          //  let user_id = ctx.request.headers['user_id'];
+            //let password_hash = ctx.request.headers['password_hash'];
+            let user_id = ctx.request.body['user_id'];
+            let password_hash = ctx.request.body['password_hash'];
 
             // Make sure both fields were specified
             if(user_id === undefined || password_hash === undefined)

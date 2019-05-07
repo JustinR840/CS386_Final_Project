@@ -27,8 +27,8 @@ const LoginController = new (require('../app/Controllers/LoginController.js'))()
 const loginRouter = require('koa-router')({
     prefix: '/login'
 });
-loginRouter.get('/', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error:", err));
-
+//loginRouter.get('/', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error:", err));
+loginRouter.post('/', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error:", err));
 
 /**
  * Advisees controller
