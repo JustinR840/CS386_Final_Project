@@ -111,6 +111,12 @@ class AdviseeHeader extends React.Component {
 		return userName;
 	}
 
+	getUserInitials(user){
+		let fName = user['fName'];
+		let lName = user['lName'];
+		return fName.charAt(0) + lName.charAt(0);
+
+	}
 	getCurrentMenuItems()
 	{
 		let {currentlyOpenMenu} = this.state;
@@ -139,8 +145,7 @@ class AdviseeHeader extends React.Component {
 		let { classes, user, setUser } = this.props;
 		let { anchorEl, open, placement } = this.state;
 		let userName = this.getUsername(user);
-		let userRole = user['role'];
-		let userInitials = "AB";
+		let userInitials = this.getUserInitials(user);
 		return (
 			<div className={classes.root}>
 				<AppBar position="static">
