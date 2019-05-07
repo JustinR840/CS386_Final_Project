@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import API from "../../APIInterface/APIInterface.js";
 import Table from "./Table.js"
 
@@ -38,7 +37,6 @@ class AdviseeView extends Component
 
 	render()
 	{
-		console.log("B",this.state.user);
 		return (
 			<div>{this.showAdvisors()}</div>
 		);

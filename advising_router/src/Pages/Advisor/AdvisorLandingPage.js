@@ -62,8 +62,6 @@ class AdvisorLandingPage extends Component
 			return <h3>NO MAIN VIEW LOADED</h3>;
 	}
 
-
-
 	render()
 	{
 		return (

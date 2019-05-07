@@ -5,7 +5,6 @@ import LoginPage from './Pages/Login/LoginPage.js';
 import AdvisorLandingPage from "./Pages/Advisor/AdvisorLandingPage";
 import AdviseeLandingPage from "./Pages/Advisee/AdviseeLandingPage";
 
-
 class App extends Component
 {
     constructor(props)

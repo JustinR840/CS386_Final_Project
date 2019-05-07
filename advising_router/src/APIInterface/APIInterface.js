@@ -54,7 +54,7 @@ class APIInterface {
 	{
 		return axios.get(`advisees/`);
 	}
-
+	
 	async getAdviseesForAdvisor(advsor_id)
 	{
 		return axios.get(`advisors/${advsor_id}/advisees`);
