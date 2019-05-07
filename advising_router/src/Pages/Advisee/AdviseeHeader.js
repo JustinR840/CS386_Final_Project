@@ -129,7 +129,7 @@ class AdviseeHeader extends React.Component {
 		{
 			return (
 				<div>
-					<MenuItem id="advisor1" onClick={this.handleClose}>{this.state.advisors[1]['advisor_fName']}</MenuItem>
+					<MenuItem id="advisor1" onClick={this.handleClose}>{this.props.advisorNames[0]}</MenuItem>
 				</div>
 			)
 		}
@@ -141,7 +141,6 @@ class AdviseeHeader extends React.Component {
 		let userName = this.getUsername(user);
 		let userRole = user['role'];
 		let userInitials = "AB";
-
 		return (
 			<div className={classes.root}>
 				<AppBar position="static">

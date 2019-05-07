@@ -38,7 +38,6 @@ class UpcomingSessions extends Component
 
 	render()
 	{
-    console.log("B", this.state.sessions);
 	//	let headerNames = ['advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
 		//let rowIndexes = ['advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
 		let temp = []
@@ -46,7 +45,6 @@ class UpcomingSessions extends Component
 			let name = element['advisor_fName'] + ' ' + element['advisor_lName'];
 			let start = new Date(Date.parse(element['start_time'])).toLocaleString();
 			temp.push({start: start, advisor: name, notes: element['notes']});
-			console.log(temp);
 		});
 
 		let headerNames = ['Session Start', 'Advisor', 'Notes'];
