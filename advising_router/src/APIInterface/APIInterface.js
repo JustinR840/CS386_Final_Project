@@ -8,14 +8,14 @@ class APIInterface {
 	async getUserInfo(user_id, password) {
 		let password_hash = crypto.createHash('md5').update(password).digest('hex');
 
-		let config = {
+	/*	let config = {
 			headers: {
 				user_id: user_id,
 				password_hash: password_hash
 			}
-		};
-
-		return axios.get(`login`, config);
+		};*/
+		return axios.post(`login`, {user_id: user_id, password_hash: password_hash});
+	//	return axios.get(`login`, config);
 
 	}
 
@@ -37,7 +37,7 @@ class APIInterface {
 	{
 		return axios.get(`advisors/${advisor_id}/sessions`);
 	}
-	
+
 	async getAdviseeUpcomingSessions(user_id){
 		return axios.get(`advisees/${user_id}/sessions`);
 	}
@@ -54,7 +54,7 @@ class APIInterface {
 	{
 		return axios.get(`advisees/`);
 	}
-	
+
 	async getAdviseesForAdvisor(advsor_id)
 	{
 		return axios.get(`advisors/${advsor_id}/advisees`);

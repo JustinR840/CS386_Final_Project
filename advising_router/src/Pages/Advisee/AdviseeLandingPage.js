@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import API from "../../APIInterface/APIInterface.js";
-import AdvisorHeader from "../Advisor/AdvisorHeader";
-import MyAdvisees from "../Advisor/Advisees/MyAdvisees.js";
-import AllAdvisees from "../Advisor/Advisees/AllAdvisees";
+import UpcomingSessions from "./Sessions/UpcomingSessions";
+import CancelledSessions from "./Sessions/CancelledSessions";
+import PastSessions from "./Sessions/PastSessions";
 import AdviseeHeader from "./AdviseeHeader";
-import AdviseeView from "../Advisee/AdviseeView";
+import AdviseeView from "./AdviseeView";
 
 
 class AdviseeLandingPage extends Component
@@ -22,7 +22,7 @@ class AdviseeLandingPage extends Component
 
 		this.state = {
 			user: user,
-			current_main_view: "none",
+			current_main_view: "upcoming_sessions",
 			userName: null,
 			headerOne: "Sessions",
 			headerTwo: "",
@@ -34,6 +34,9 @@ class AdviseeLandingPage extends Component
 		this.changeMainView = this.changeMainView.bind(this);
 	}
 
+	changeMainView(newView){
+		this.setState({current_main_view: newView})
+	}
 
 	getUsername()
 	{
@@ -60,28 +63,26 @@ class AdviseeLandingPage extends Component
 		return userName;
 	}
 
-
-	changeMainView(newView)
-	{
-		this.setState({current_main_view: newView})
-	}
-
-
 	whatMainView()
 	{
 		let current_main_view = this.state.current_main_view;
 
-		if(current_main_view === "my_advisees")
-			return <MyAdvisees user={this.state.user}/>;
-		else if(current_main_view === "all_advisees")
-			return <AllAdvisees/>;
+		if(current_main_view === "upcoming_sessions")
+			return <UpcomingSessions user={this.state.user}/>;
+			//return <h3>Upcoming Sessions</h3>;
+		else if(current_main_view === "past_sessions")
+			//return <h3>Past Sessions</h3>;
+			return <PastSessions user={this.state.user}/>;
+		else if(current_main_view === "cancelled_sessions")
+			return <h3>Cancelled Sessions</h3>;
+			//return <CancelledSessions user={this.state.user}/>
 		else
-			return <h3>NO MAIN VIEW LOADED</h3>;
+			//return <AdvisorSessions user={this.state.user} advisor={current_main_view}/>;
+			return <h3>Hi</h3>;
 	}
 
 
-	componentDidMount ()
-	{
+	componentDidMount (){
 		const api = new API();
 		if(this.state.user !== null)
 		{
@@ -96,9 +97,7 @@ class AdviseeLandingPage extends Component
 						arr.forEach(element => {
 								advisorNames.push(element['advisor_fName'] + ' ' + element['advisor_lName'])
 						});
-						let userName = this.getUsername();
-						console.log(userName);
-						this.setState({userName: userName, items:arr, headerTwoItems: advisorNames})
+						this.setState({items:arr, headerTwoItems: advisorNames})
 					}
 				}).catch((error) =>
 				{
@@ -107,42 +106,17 @@ class AdviseeLandingPage extends Component
 
 				//get list of all available sessions
 			}
-			else if(this.state.user['role'] === "advisor"){
-			}
+
 		}
 	}
-
-
-
-
-	getHTMLToReturn(role)
-	{
-		if(role === "advisor")
-		{
-			return (
-				<div>
-					<AdvisorHeader menuName="AdvisorHeader" user={this.state.user} changeMainView={this.changeMainView}/>
-					{this.whatMainView()}
-				</div>
-			);
-		}
-		else if(role === "advisee")
-		{
-			return (
-				<div>
-					<AdviseeHeader menuName="Test Pls" headerTwo="Advisors" itemNames={this.state.headerTwoItems} userName={this.state.userName} userType={this.state.user['role']}/>
-					<AdviseeView advisee={this.state.user} advisors={this.state.items} test="test"/>
-				</div>
-			);
-		}
-	}
-
 
 	render()
 	{
+
 		return (
 			<div>
-				{this.getHTMLToReturn(this.state.user['role'])}
+				<AdviseeHeader setUser={this.props.setUser} user={this.state.user} menuName="AdviseeHeader" headerTwo="Advisors" itemNames={this.state.headerTwoItems} changeMainView={this.changeMainView}/>
+				{this.whatMainView()}
 			</div>
 		);
 	}

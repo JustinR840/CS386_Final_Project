@@ -10,7 +10,8 @@ import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: '90%',
+    marginLeft: 8,
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
@@ -53,7 +54,7 @@ function SimpleTable(props) {
   const { classes, titles, attributes, tuples } = props;
   return (
     <Paper className={classes.root}>
-      <Table className={classes.table}>
+      <Table style={{paddingLeft: 8}} className={classes.table}>
         <TableHeadElement titles={titles}/>
         <TableBody>
           {tuples.map((row, idx) => (
