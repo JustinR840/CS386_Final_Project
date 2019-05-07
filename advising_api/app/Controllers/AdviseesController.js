@@ -123,7 +123,7 @@ class AdviseesController {
 			}
 			values: [ctx.params.advisee_id]
 			//let query = `select NOW();`
-			let query = `SELECT * FROM advising_session where student_id = ? and start_time < now();`;
+			let query = `SELECT * FROM advising_session asa LEFT JOIN advising_block adb on asa.block_id = adb.block_id LEFT JOIN advising_advisor ada on adb.advisor_id = ada.advisor_id WHERE asa.student_id = ? and asa.start_time < now();`;
 			// console.log('About to run this query.', query);
 			dbConnection.query({
 				sql: query,
