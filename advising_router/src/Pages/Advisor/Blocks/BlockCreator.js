@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import BlockCreatorBox from "./BlockCreatorBox.js"
 import API from "../../../APIInterface/APIInterface.js";
 
