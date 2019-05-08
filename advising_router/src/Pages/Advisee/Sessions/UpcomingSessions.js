@@ -38,8 +38,6 @@ class UpcomingSessions extends Component
 
 	render()
 	{
-	//	let headerNames = ['advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
-		//let rowIndexes = ['advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
 		let temp = []
 		this.state.sessions.forEach(element => {
 			let name = element['advisor_fName'] + ' ' + element['advisor_lName'];
