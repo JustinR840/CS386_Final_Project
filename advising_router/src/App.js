@@ -5,7 +5,6 @@ import LoginPage from './Pages/Login/LoginPage.js';
 import AdvisorLandingPage from "./Pages/Advisor/AdvisorLandingPage";
 import AdviseeLandingPage from "./Pages/Advisee/AdviseeLandingPage";
 
-
 class App extends Component
 {
     constructor(props)
@@ -42,7 +41,7 @@ class App extends Component
             }
             else if(role === "advisee")
             {
-                  return <AdviseeLandingPage user={this.state.user}/>;
+                return <AdviseeLandingPage user={this.state.user} setUser={this.setUser}/>;
             }
         }
     }

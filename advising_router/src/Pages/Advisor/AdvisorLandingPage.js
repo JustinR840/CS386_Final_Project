@@ -36,7 +36,6 @@ class AdvisorLandingPage extends Component
 		this.setState({current_main_view: newView})
 	}
 
-
 	whatMainView()
 	{
 		let current_main_view = this.state.current_main_view;
@@ -63,12 +62,11 @@ class AdvisorLandingPage extends Component
 			return <h3>NO MAIN VIEW LOADED</h3>;
 	}
 
-
 	render()
 	{
 		return (
 			<div>
-				<AdvisorHeader menuName="AdvisorHeader" user={this.state.user} changeMainView={this.changeMainView} setUser={this.props.setUser}/>
+				<AdvisorHeader menuName = "AdvisorHeader" user={this.state.user} changeMainView={this.changeMainView}/>
 				{this.whatMainView()}
 			</div>
 		);
