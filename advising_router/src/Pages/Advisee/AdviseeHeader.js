@@ -108,6 +108,7 @@ class AdviseeHeader extends React.Component {
 		}
 		else if (currentlyOpenMenu === "advisors")
 		{
+			console.log(this.props.advisor);
 			if(this.props.advisorNames.length === 1){
 			return (
 				<div>
@@ -118,7 +119,7 @@ class AdviseeHeader extends React.Component {
 			return (
 				<div>
 					<MenuItem id={this.props.advisors[0]['advisor_id']} name={this.props.advisorNames[0]} onClick={this.handleClose}>{this.props.advisorNames[0]}</MenuItem>
-					<MenuItem id={this.props.advisors[1]['advisor_id']} name={this.props.advisorNames[1]} onClick={this.handleClose}>{this.props.advisorNames[0]}</MenuItem>
+					<MenuItem id={this.props.advisors[1]['advisor_id']} name={this.props.advisorNames[1]} onClick={this.handleClose}>{this.props.advisorNames[1]}</MenuItem>
 				</div>
 			)};
 		}
