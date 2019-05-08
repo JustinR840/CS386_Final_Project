@@ -57,6 +57,41 @@ class AdvisorsController {
 	}
 
 
+	async newBlockForAdvisor(ctx) {
+		return new Promise((resolve, reject) => {
+			const match = ctx.params.advisor_id.match(/[^0-9a-zA-Z]+/);  // We expect an alphanumeric id.
+			if (match) {
+				console.log('about to return because user input contains non-alphanumeric characters..');
+				return reject("Invalid user id.");
+			}
+
+			let newBlockInformation = ctx.request.body['post_data'];
+
+			console.log(newBlockInformation);
+
+			ctx.body = {thanks: "THANKS"};
+			ctx.status = 200;
+			return resolve();
+
+			// let query = "SELECT * FROM advising_block WHERE advisor_id = ?";
+			// dbConnection.query({
+			// 	sql: query,
+			// 	values: [ctx.params.advisor_id]
+			// }, (error, tuples) => {
+			// 	if (error) {
+			// 		console.log("Connection error in AdvisorsController::blocksForAdvisor", error);
+			// 		ctx.body = '<b>Internal Server Error</b>';
+			// 		ctx.status = 500;
+			// 		return reject(error);
+			// 	}
+			// 	ctx.body = tuples;
+			// 	ctx.status = 200;
+			// 	return resolve();
+			// });
+		}).catch(err => console.log("Database connection error.", err));
+	}
+
+
 	async sessionsForAdvisor(ctx) {
 		return new Promise((resolve, reject) => {
 			const match = ctx.params.advisor_id.match(/[^0-9a-zA-Z]+/);  // We expect an alphanumeric id.

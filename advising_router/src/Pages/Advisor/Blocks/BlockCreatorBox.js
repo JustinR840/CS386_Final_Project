@@ -7,6 +7,11 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import ReactDOM from "react-dom";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 
 const styles = theme => ({
@@ -34,44 +39,83 @@ const styles = theme => ({
 	form: {
 		marginTop: theme.spacing.unit,
 	},
+	formControl: {
+		margin: theme.spacing.unit,
+		minWidth: 120,
+	},
 	submit: {
 		width: '100%',
 		marginTop: theme.spacing.unit * 3,
 	}
 });
 
-function BlockCreatorBox(props) {
-	let { handleSubmit, handleInputChange, info_error, classes } = props;
 
-	return (
-		<main className={classes.main}>
-			<CssBaseline/>
-			<Paper className={classes.paper} onSubmit={handleSubmit}>
+class BlockCreatorBox extends React.Component {
+	state = {
+		start_time: '',
+		session_length: '',
+		num_sessions: '',
+		labelWidth: 0,
+		callMe: this.props.handleSubmit
+	};
 
-				<Typography component="h1" variant="h5">
-					Create New Block
-				</Typography>
-				{info_error === true ? <Typography color="error" variant="subtitle1">Invalid Username or Password</Typography> : ''}
-				<form className={classes.form}>
-					<FormControl margin="normal" onChange={handleInputChange} fullWidth>
-						<TextField id="start_time" label="Start Time" variant="outlined" type="datetime-local" InputLabelProps={{shrink: true,}} required error={info_error}/>
-						{/*<TextField name="start_time" id="start_time" variant="outlined" label="Start Time" error={info_error} required/>*/}
-					</FormControl>
-					<FormControl margin="normal" onChange={handleInputChange} fullWidth>
-						<TextField id="end_time" label="End Time" variant="outlined" type="datetime-local" InputLabelProps={{shrink: true,}} required error={info_error}/>
-						{/*<TextField name="end_time" id="end_time" variant="outlined" label="End Time" error={info_error} required/>*/}
-					</FormControl>
-					<FormControl margin="normal" onChange={handleInputChange} fullWidth>
-						<TextField name="num_sessions" id="num_sessions" variant="outlined" label="Number of Sessions" error={info_error} required/>
-					</FormControl>
-					<Button className={classes.submit} color="primary" variant="contained" type="submit">
-						Create Block
-					</Button>
-				</form>
-			</Paper>
-		</main>
-	);
+	onSubmit = event =>
+	{
+		event.preventDefault();
+
+		let { start_time, session_length, num_sessions } = this.state;
+
+		this.state.callMe({
+			start_time: start_time,
+			session_length: session_length,
+			num_sessions: num_sessions
+		});
+	};
+
+	handleChange = event => {
+		this.setState({ [event.target.name]: event.target.value });
+	};
+
+	render() {
+
+		let { classes } = this.props;
+
+		return (
+			<main className={classes.main}>
+				<Paper className={classes.paper} onSubmit={this.onSubmit}>
+
+					<Typography component="h1" variant="h5">
+						Create New Block
+					</Typography>
+
+					<form className={classes.form}>
+
+						<FormControl className={classes.formControl} margin="normal" onChange={this.handleChange} fullWidth>
+							<TextField id="start_time" name="start_time" label="Start Time" type="datetime-local" value={this.state.start_time} InputLabelProps={{shrink: true,}} required/>
+						</FormControl>
+
+						<FormControl className={classes.formControl} margin="normal" onChange={this.handleChange} fullWidth>
+							<TextField name="num_sessions" id="num_sessions" label="Number of Sessions" value={this.state.num_sessions} required/>
+						</FormControl>
+
+						<FormControl className={classes.formControl} margin="normal" fullWidth>
+							<Select value={this.state.session_length} onChange={this.handleChange} name="session_length" id="session_length" required>
+								<MenuItem value={20}>Twenty</MenuItem>
+								<MenuItem value={25}>Twenty-Five</MenuItem>
+								<MenuItem value={30}>Thirty</MenuItem>
+							</Select>
+						</FormControl>
+
+						<Button className={classes.submit} color="primary" variant="contained" type="submit">
+							Create Block
+						</Button>
+					</form>
+				</Paper>
+			</main>
+		);
+	}
 }
+
 
 BlockCreatorBox.propTypes = {
 	classes: PropTypes.object.isRequired,

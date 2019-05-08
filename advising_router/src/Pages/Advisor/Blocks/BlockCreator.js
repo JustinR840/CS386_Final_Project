@@ -3,6 +3,14 @@ import React, { Component } from 'react';
 import BlockCreatorBox from "./BlockCreatorBox.js"
 import API from "../../../APIInterface/APIInterface.js";
 
+const moment = require('moment');
+
+
+Date.prototype.addMinutes = function(m) {
+	this.setTime(this.getTime() + (m*60*1000));
+	return this;
+};
+
 
 class BlockCreator extends Component
 {
@@ -10,57 +18,35 @@ class BlockCreator extends Component
 	{
 		super(props);
 
-		this.state = {
-			start_time: null,
-			end_time: null,
-			num_sessions: null,
-			info_error: false
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleSubmit(data)
+	{
+		let { start_time, session_length, num_sessions } = data;
+
+		let block_start_time = require('moment')(new Date(start_time)).format('YYYY-MM-DD HH:mm:ss');
+		let block_end_time = moment((new Date(start_time).addMinutes(session_length * num_sessions))).format('YYYY-MM-DD HH:mm:ss');
+
+		let sessions = [];
+		for(let i = 0; i < num_sessions; i++)
+		{
+			let session_start_time = new Date(start_time).addMinutes(i * session_length);
+			sessions.push(require('moment')(session_start_time).format('YYYY-MM-DD HH:mm:ss'));
+		}
+
+		let new_block_information = {
+			start_time: block_start_time,
+			end_time: block_end_time,
+			sessions: sessions
 		};
 
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleInputChange = this.handleInputChange.bind(this);
-	}
-
-	handleInputChange = event =>
-	{
-		// event.target.id has been constructed to either be user_id or password
-		// so we can directly use it to index the state object. This means
-		// we only need this one function to update the state for user_id and password.
-		this.setState({
-			[event.target.id]: event.target.value
-		});
-	};
-
-	getDateInfo(dateString)
-	{
-		let a = dateString.split('T');
-
-		let date = a[0].split('-');
-		let time = a[1].split(':');
-
-		return {
-			year: date[0],
-			month: date[1],
-			day: date[2],
-			hour: time[0],
-			minute: time[1]
-		}
-	}
-
-	handleSubmit = event =>
-	{
-		event.preventDefault();
-
-		console.log(this.state.start_time);
-		console.log(this.state.end_time);
-		console.log(this.state.num_sessions);
-
-		let start_date = this.getDateInfo(this.state.start_time);
-		console.log(start_date);
+		console.log("B");
+		console.log(sessions);
 
 		const api = new API();
 
-		api.createNewBlock(this.props.user['user_id'], start_date).then(value => {
+		api.createNewBlock(this.props.user['user_id'], new_block_information).then(value => {
 			console.log("POSTED");
 			console.log(value);
 		}).catch( error =>
@@ -68,33 +54,11 @@ class BlockCreator extends Component
 			console.log("NOT POSTED: ERROR");
 			console.log(error);
 		});
-
-		// const api = new API();
-		//
-		// api.getUserInfo(this.state.user_id, this.state.password).then((info) =>
-		// {
-		//
-		// 	let user = info['data']['user'];
-		// 	if(user !== null)
-		// 	{
-		// 		// Login success
-		// 		this.state.setUser(user);
-		// 	}
-		// 	else
-		// 	{
-		// 		// Login fail
-		// 		this.setState({info_error: true});
-		// 	}
-		//
-		// }).catch((error) =>
-		// {
-		// 	// What kind of error should be here?
-		// });
 	};
 
 	render()
 	{
-		return <BlockCreatorBox handleSubmit={this.handleSubmit} handleInputChange={this.handleInputChange} info_error={this.state.info_error}/>;
+		return <BlockCreatorBox handleSubmit={this.handleSubmit}/>
 	}
 }
 
