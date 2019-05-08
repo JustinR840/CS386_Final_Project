@@ -28,6 +28,7 @@ class UpcomingSessions extends Component
 		});*/
     api.getAdviseeUpcomingSessions(this.props.user['user_id']).then((info) => {
       let sessions = info['data'];
+			console.log('S',sessions);
 
       this.setState({sessions: sessions});
     }).catch((error) => {

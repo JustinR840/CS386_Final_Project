@@ -46,7 +46,7 @@ class UpcomingSessions extends Component
 				{temp.length > 0 ? (
         <Table titles={headerNames} attributes={rowIndexes} tuples={temp}/>
       ) : (
-        <p style={{paddingLeft: 8}}>No Upcoming Sessions</p>
+        <p style={{paddingLeft: 8}}>No Available Sessions</p>
       )}
 			</div>
 		);

@@ -69,10 +69,8 @@ class AdviseeLandingPage extends Component
 		else if(current_main_view === "cancelled_sessions")
 			return <CancelledSessions user={this.state.user}/>
 		else{
-			let adv = this.state.advisors.filter(obj => {
-				return obj.advisor_id === current_main_view
-		  });
-			let name = adv[0]['advisor_fName'] + ' ' + adv[0]['advisor_lName'];
+			let adv = this.state.advisors.find(obj => obj.advisor_id === current_main_view);
+			let name = adv['advisor_fName'] + ' ' + adv['advisor_lName'];
 			return <AdvisorSessions user={this.state.user} name={name} advisor_id={current_main_view}/>;
 		}
 	}
