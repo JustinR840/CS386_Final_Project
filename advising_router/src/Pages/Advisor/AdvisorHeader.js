@@ -178,4 +178,3 @@ AdvisorHeader.propTypes = {
 };
 
 export default withStyles(styles)(AdvisorHeader);
-

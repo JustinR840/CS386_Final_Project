@@ -4,8 +4,6 @@ import UpcomingSessions from "./Sessions/UpcomingSessions";
 import CancelledSessions from "./Sessions/CancelledSessions";
 import PastSessions from "./Sessions/PastSessions";
 import AdviseeHeader from "./AdviseeHeader";
-import AdviseeView from "./AdviseeView";
-
 
 class AdviseeLandingPage extends Component
 {
