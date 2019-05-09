@@ -62,8 +62,8 @@ class EditSessions extends Component
 		}
 		else
 		{
-			let headerNames = ['EDIT', 'status', 'advisor_id', 'student_id', 'start_time', 'end_time', 'session_id', 'block_id', 'locked', 'num_sessions', 'notes'];
-			let rowIndexes  = ['edit', 'status', 'advisor_id', 'student_id', 'start_time', 'end_time', 'session_id', 'block_id', 'locked', 'num_sessions', 'notes'];
+			let headerNames = ['EDIT', 'locked', 'status', 'block_id', 'start_time', 'student_id', 'notes'];
+			let rowIndexes = ['edit', 'locked', 'status', 'block_id', 'start_time', 'student_id', 'notes'];
 
 			return (
 				<div>

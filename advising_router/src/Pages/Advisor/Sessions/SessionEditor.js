@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-import API from "../../../APIInterface/APIInterface.js";
-import PaginationTable from "../PaginationTable";
-import {Button} from "@material-ui/core";
+import SessionEditorBox from "./SessionEditorBox";
 
 
 class SessionEditor extends Component
@@ -16,33 +14,15 @@ class SessionEditor extends Component
 		};
 	}
 
-
-	componentDidMount ()
-	{
-		// const api = new API();
-		//
-		// api.getAllSessionsForAdvisor(this.props.user['user_id']).then((info) => {
-		// 	let sessions = info['data'];
-		// 	this.setState({sessions: sessions});
-		// }).catch((error) => {
-		//
-		// });
-	}
-
-
 	render()
 	{
-		// let headerNames = ['advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
-		let rowIndexes = ['advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
 
-		let { session, doneEditingSession } = this.props;
+		let { doneEditingSession } = this.props;
 
 		return (
 			<div>
-				{rowIndexes.map((v, idx) =>
-					<p key={idx}>{session[v]}</p>
-				)}
-				<Button variant="contained" onClick={doneEditingSession}>Done Editing</Button>
+				<SessionEditorBox handleSubmit={doneEditingSession}/>
+
 			</div>
 		);
 	}
