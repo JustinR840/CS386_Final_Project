@@ -67,27 +67,39 @@ class AdvisorsController {
 
 			let newBlockInformation = ctx.request.body['post_data'];
 
-			console.log(newBlockInformation);
+			// Insert into the advising_block table
+			let query = "INSERT INTO advising_block VALUES (NULL, ?, ?, ?, ?)";
+			dbConnection.query({
+				sql: query,
+				values: [newBlockInformation['start_time'], newBlockInformation['end_time'], newBlockInformation['sessions'].length, ctx.params.advisor_id]
+			}, (error, tuples) => {
+				if (error) {
+					console.log("Connection error in AdvisorsController::blocksForAdvisor", error);
+					ctx.body = '<b>Internal Server Error</b>';
+					ctx.status = 500;
+					return reject(error);
+				}
 
-			ctx.body = {thanks: "THANKS"};
-			ctx.status = 200;
-			return resolve();
+				let block_id = tuples['insertId'];
+				let sessions = newBlockInformation['sessions'];
 
-			// let query = "SELECT * FROM advising_block WHERE advisor_id = ?";
-			// dbConnection.query({
-			// 	sql: query,
-			// 	values: [ctx.params.advisor_id]
-			// }, (error, tuples) => {
-			// 	if (error) {
-			// 		console.log("Connection error in AdvisorsController::blocksForAdvisor", error);
-			// 		ctx.body = '<b>Internal Server Error</b>';
-			// 		ctx.status = 500;
-			// 		return reject(error);
-			// 	}
-			// 	ctx.body = tuples;
-			// 	ctx.status = 200;
-			// 	return resolve();
-			// });
+				sessions.forEach((session, idx) => {
+					// Insert into the advising_block table
+					let query = "INSERT INTO advising_session VALUES (NULL, ?, ?, ?, ?, ?, ?)";
+					dbConnection.query({
+						sql: query,
+						values: [block_id, session, "", "open", "no", ""]
+					}, (error, tuples) => {
+						if (error) {
+							console.log("Connection error in AdvisorsController::blocksForAdvisor", error);
+						}
+					});
+				});
+
+				ctx.body = tuples;
+				ctx.status = 200;
+				return resolve();
+			});
 		}).catch(err => console.log("Database connection error.", err));
 	}
 
