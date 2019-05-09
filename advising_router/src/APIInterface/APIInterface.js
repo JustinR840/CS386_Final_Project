@@ -30,6 +30,21 @@ class APIInterface {
 		return axios.get(`advisors/${advisor_id}/sessions`);
 	}
 
+	async getPastSessionsForAdvisor(advisor_id)
+	{
+		return axios.get(`advisors/${advisor_id}/past_sessions`);
+	}
+
+	async getFutureSessionsForAdvisor(advisor_id)
+	{
+		return axios.get(`advisors/${advisor_id}/future_sessions`);
+	}
+
+	async getUpcomingSessionsForAdvisor(advisor_id)
+	{
+		return axios.get(`advisors/${advisor_id}/upcoming_sessions`);
+	}
+
 	async getAdviseeUpcomingSessions(user_id){
 		return axios.get(`advisees/${user_id}/sessions`);
 	}
