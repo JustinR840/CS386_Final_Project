@@ -18,9 +18,9 @@ class UpcomingSessions extends Component
 	componentDidMount ()
 	{
 		const api = new API();
-		api.getAdviseeUpcomingSessions(this.props.user['user_id']).then((info) => {
+		api.getAdviseeAdvisorOpenSessions(this.props.id).then((info) => {
 			let sessions = info['data'];
-
+			console.log(sessions);
 			this.setState({sessions: sessions});
 		}).catch((error) => {
 

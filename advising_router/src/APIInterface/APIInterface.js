@@ -30,6 +30,10 @@ class APIInterface {
 		return axios.get(`advisors/${advisor_id}/sessions`);
 	}
 
+	async getAdviseeAdvisorOpenSessions(user_id){
+		return axios.get(`advisee/${user_id}/open`);
+	}
+
 	async getAdviseeUpcomingSessions(user_id){
 		return axios.get(`advisees/${user_id}/sessions`);
 	}
@@ -46,7 +50,7 @@ class APIInterface {
 	{
 		return axios.get(`advisees/`);
 	}
-	
+
 	async getAdviseesForAdvisor(advsor_id)
 	{
 		return axios.get(`advisors/${advsor_id}/advisees`);
