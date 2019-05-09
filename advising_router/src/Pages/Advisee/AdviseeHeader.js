@@ -11,6 +11,7 @@ import Popper from "@material-ui/core/Popper";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Divider from "@material-ui/core/Divider";
 
 const styles = theme => ({
 	root: {
@@ -100,9 +101,11 @@ class AdviseeHeader extends React.Component {
 		{
 			return (
 				<div>
-				<MenuItem id="upcoming_sessions" onClick={this.handleClose}>Upcoming Sessions</MenuItem>
-				<MenuItem id="past_sessions" onClick={this.handleClose}>Past Sessions</MenuItem>
-				<MenuItem id="cancelled_sessions" onClick={this.handleClose}>Cancelled Sessions</MenuItem>
+					<MenuItem id="upcoming_sessions" onClick={this.handleClose}>Upcoming Sessions</MenuItem>
+					<Divider/>
+					<MenuItem id="past_sessions" onClick={this.handleClose}>Past Sessions</MenuItem>
+					<Divider/>
+					<MenuItem id="cancelled_sessions" onClick={this.handleClose}>Cancelled Sessions</MenuItem>
 				</div>
 			)
 		}

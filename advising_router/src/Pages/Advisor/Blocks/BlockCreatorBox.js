@@ -32,15 +32,10 @@ const styles = theme => ({
 		alignItems: 'center',
 		padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
 	},
-	avatar: {
-		margin: theme.spacing.unit,
-		backgroundColor: theme.palette.secondary.main,
-	},
 	form: {
 		marginTop: theme.spacing.unit,
 	},
 	formControl: {
-		margin: theme.spacing.unit,
 		minWidth: 120,
 	},
 	submit: {
@@ -99,10 +94,11 @@ class BlockCreatorBox extends React.Component {
 						</FormControl>
 
 						<FormControl className={classes.formControl} margin="normal" fullWidth>
+							<InputLabel>Session Length</InputLabel>
 							<Select value={this.state.session_length} onChange={this.handleChange} name="session_length" id="session_length" required>
-								<MenuItem value={20}>Twenty</MenuItem>
-								<MenuItem value={25}>Twenty-Five</MenuItem>
-								<MenuItem value={30}>Thirty</MenuItem>
+								<MenuItem value={20}>20 Minutes</MenuItem>
+								<MenuItem value={25}>25 Minutes</MenuItem>
+								<MenuItem value={30}>30 Minutes</MenuItem>
 							</Select>
 						</FormControl>
 

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import API from "../../../APIInterface/APIInterface.js";
 import SessionEditorPaginationTable from "./SessionEditorPaginationTable.js";
 import SessionEditor from "./SessionEditor.js";
+import {Typography} from "@material-ui/core";
 
 
 class EditSessions extends Component
@@ -48,20 +49,35 @@ class EditSessions extends Component
 	}
 
 
+	getHTMLToReturn()
+	{
+		if(this.state.editingSession === true)
+		{
+			return (
+				<div>
+					<Typography variant="h3" align="center" style={{marginTop: '20px'}}>Edit Advising Appointments</Typography>
+					<SessionEditor session={this.state.sessions[this.state.editingSessionNumber]} doneEditingSession={this.doneEditingSession} />
+				</div>
+			);
+		}
+		else
+		{
+			let headerNames = ['EDIT', 'locked', 'status', 'block_id', 'start_time', 'student_id', 'notes'];
+			let rowIndexes = ['edit', 'locked', 'status', 'block_id', 'start_time', 'student_id', 'notes'];
+
+			return (
+				<div>
+					<Typography variant="h3" align="center" style={{marginTop: '20px'}}>Choose An Advising Appointment</Typography>
+					<SessionEditorPaginationTable headerNames={headerNames} rowIndexes={rowIndexes} rows={this.state.sessions} editButtonOnClick={this.editButtonOnClick}/>
+				</div>
+			);
+		}
+	}
+
+
 	render()
 	{
-		let headerNames = ['EDIT', 'status', 'advisor_id', 'student_id', 'start_time', 'end_time', 'session_id', 'block_id', 'locked', 'num_sessions', 'notes'];
-		let rowIndexes  = ['edit', 'status', 'advisor_id', 'student_id', 'start_time', 'end_time', 'session_id', 'block_id', 'locked', 'num_sessions', 'notes'];
-
-		return (
-			<div>
-				{
-					this.state.editingSession === true ?
-						<SessionEditor session={this.state.sessions[this.state.editingSessionNumber]} doneEditingSession={this.doneEditingSession} /> :
-						<SessionEditorPaginationTable headerNames={headerNames} rowIndexes={rowIndexes} rows={this.state.sessions} editButtonOnClick={this.editButtonOnClick}/>
-				}
-			</div>
-		);
+		return this.getHTMLToReturn();
 	}
 }
 
