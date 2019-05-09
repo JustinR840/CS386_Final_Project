@@ -30,24 +30,8 @@ class APIInterface {
 		return axios.get(`advisors/${advisor_id}/sessions`);
 	}
 
-	async getAdviseeAdvisorOpenSessions(user_id)
-  {
+	async getAdviseeAdvisorOpenSessions(user_id){
 		return axios.get(`advisee/${user_id}/open`);
-  }
-  
-	async getPastSessionsForAdvisor(advisor_id)
-	{
-		return axios.get(`advisors/${advisor_id}/past_sessions`);
-	}
-
-	async getFutureSessionsForAdvisor(advisor_id)
-	{
-		return axios.get(`advisors/${advisor_id}/future_sessions`);
-	}
-
-	async getUpcomingSessionsForAdvisor(advisor_id)
-	{
-		return axios.get(`advisors/${advisor_id}/upcoming_sessions`);
 	}
 
 	async getAdviseeUpcomingSessions(user_id){
@@ -55,6 +39,7 @@ class APIInterface {
 	}
 
 	async getAdviseePastSessions(user_id){
+		console.log('u',user_id);
 		return axios.get(`advisees/${user_id}/pastsessions`);
 	}
 
