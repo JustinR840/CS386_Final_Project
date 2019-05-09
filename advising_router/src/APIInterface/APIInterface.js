@@ -16,6 +16,20 @@ class APIInterface {
 		return axios.post(`advisors/${advisor_id}/blocks`, {post_data: block_information});
 	}
 
+	async getPastSessionsForAdvisor(advisor_id)
+		{
+			return axios.get(`advisors/${advisor_id}/past_sessions`);
+		}
+
+		async getFutureSessionsForAdvisor(advisor_id)
+		{
+			return axios.get(`advisors/${advisor_id}/future_sessions`);
+		}
+
+		async getUpcomingSessionsForAdvisor(advisor_id)
+		{
+			return axios.get(`advisors/${advisor_id}/upcoming_sessions`);
+
 	async getAdvisorAdvisingBlocks(advisor_id)
 	{
 		return axios.get(`advisors/${advisor_id}/blocks`);
