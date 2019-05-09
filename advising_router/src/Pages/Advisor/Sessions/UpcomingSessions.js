@@ -51,7 +51,10 @@ class AllSessions extends Component
 		return (
 			<div>
 				<Typography variant="h3" align="center" style={{marginTop: '20px'}}>Upcoming Advising Appointments</Typography>
-				<PaginationTable headerNames={headerNames} rowIndexes={rowIndexes} rows={this.state.sessions}/>
+				{this.state.sessions.length === 0 ?
+					<Typography variant="h5" align="center" style={{marginTop: '60px'}}>No Upcoming Appointments</Typography> :
+					<PaginationTable headerNames={headerNames} rowIndexes={rowIndexes} rows={this.state.sessions}/>
+				}
 			</div>
 		);
 	}
