@@ -156,9 +156,9 @@ class AdvisorHeader extends React.Component {
 							)}
 						</Popper>
 
-						<Button id="advisees" onClick={this.handleClick}>Sessions</Button>
-						<Button id="blocks" onClick={this.handleClick}>Blocks</Button>
-						<Button id="sessions" onClick={this.handleClick}>Advisees</Button>
+						<Button color="inherit" id="advisees" onClick={this.handleClick}>Sessions</Button>
+						<Button color="inherit" id="blocks" onClick={this.handleClick}>Blocks</Button>
+						<Button color="inherit" id="sessions" onClick={this.handleClick}>Advisees</Button>
 
 						<p className={classes.grow}/>
 
