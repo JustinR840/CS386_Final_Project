@@ -131,6 +131,87 @@ class AdvisorsController {
 	}
 
 
+	async pastSessionsForAdvisor(ctx) {
+		return new Promise((resolve, reject) => {
+			const match = ctx.params.advisor_id.match(/[^0-9a-zA-Z]+/);  // We expect an alphanumeric id.
+			if (match) {
+				console.log('about to return because user input contains non-alphanumeric characters..');
+				return reject("Invalid user id.");
+			}
+
+			let query = "SELECT * FROM advising_session ad_se LEFT JOIN advising_block ad_bl ON ad_se.block_id = ad_bl.block_id WHERE ad_bl.advisor_id = ? AND ad_se.start_time < NOW()";
+			dbConnection.query({
+				sql: query,
+				values: [ctx.params.advisor_id]
+			}, (error, tuples) => {
+				if (error) {
+					console.log("Connection error in AdvisorsController::pastSessionsForAdvisor", error);
+					ctx.body = '<b>Internal Server Error</b>';
+					ctx.status = 500;
+					return reject(error);
+				}
+				ctx.body = tuples;
+				ctx.status = 200;
+				return resolve();
+			});
+		}).catch(err => console.log("Database connection error.", err));
+	}
+
+
+	async futureSessionsForAdvisor(ctx) {
+		return new Promise((resolve, reject) => {
+			const match = ctx.params.advisor_id.match(/[^0-9a-zA-Z]+/);  // We expect an alphanumeric id.
+			if (match) {
+				console.log('about to return because user input contains non-alphanumeric characters..');
+				return reject("Invalid user id.");
+			}
+
+			let query = "SELECT * FROM advising_session ad_se LEFT JOIN advising_block ad_bl ON ad_se.block_id = ad_bl.block_id WHERE ad_bl.advisor_id = ? AND ad_se.start_time > NOW()";
+			dbConnection.query({
+				sql: query,
+				values: [ctx.params.advisor_id]
+			}, (error, tuples) => {
+				if (error) {
+					console.log("Connection error in AdvisorsController::futureSessionsForAdvisor", error);
+					ctx.body = '<b>Internal Server Error</b>';
+					ctx.status = 500;
+					return reject(error);
+				}
+				ctx.body = tuples;
+				ctx.status = 200;
+				return resolve();
+			});
+		}).catch(err => console.log("Database connection error.", err));
+	}
+
+
+	async upcomingSessionsForAdvisor(ctx) {
+		return new Promise((resolve, reject) => {
+			const match = ctx.params.advisor_id.match(/[^0-9a-zA-Z]+/);  // We expect an alphanumeric id.
+			if (match) {
+				console.log('about to return because user input contains non-alphanumeric characters..');
+				return reject("Invalid user id.");
+			}
+
+			let query = "SELECT * FROM advising_session ad_se LEFT JOIN advising_block ad_bl ON ad_se.block_id = ad_bl.block_id WHERE ad_bl.advisor_id = ? AND ad_se.start_time < NOW() + INTERVAL 7 DAY";
+			dbConnection.query({
+				sql: query,
+				values: [ctx.params.advisor_id]
+			}, (error, tuples) => {
+				if (error) {
+					console.log("Connection error in AdvisorsController::upcomingSessionsForAdvisor", error);
+					ctx.body = '<b>Internal Server Error</b>';
+					ctx.status = 500;
+					return reject(error);
+				}
+				ctx.body = tuples;
+				ctx.status = 200;
+				return resolve();
+			});
+		}).catch(err => console.log("Database connection error.", err));
+	}
+
+
 	async advisorInformation(ctx) {
 		return new Promise((resolve, reject) => {
 			const match = ctx.params.advisor_id.match(/[^0-9a-zA-Z]+/);  // We expect an alphanumeric id.

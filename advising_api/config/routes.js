@@ -62,6 +62,9 @@ advisorsRouter.get('/', Authorize('advisor'), AdvisorsController.allAdvisors, (e
 advisorsRouter.get('/:advisor_id', Authorize('advisor'), AdvisorsController.advisorInformation, (err) => console.log(err));
 advisorsRouter.get('/:advisor_id/advisees', Authorize('advisor'), AdvisorsController.adviseesForAdvisor, (err) => console.log(err));
 advisorsRouter.get('/:advisor_id/sessions', Authorize('advisor'), AdvisorsController.sessionsForAdvisor, (err) => console.log(err));
+advisorsRouter.get('/:advisor_id/past_sessions', Authorize('advisor'), AdvisorsController.pastSessionsForAdvisor, (err) => console.log(err));
+advisorsRouter.get('/:advisor_id/future_sessions', Authorize('advisor'), AdvisorsController.futureSessionsForAdvisor, (err) => console.log(err));
+advisorsRouter.get('/:advisor_id/upcoming_sessions', Authorize('advisor'), AdvisorsController.upcomingSessionsForAdvisor, (err) => console.log(err));
 advisorsRouter.get('/:advisor_id/blocks', Authorize('advisor'), AdvisorsController.blocksForAdvisor, (err) => console.log(err));
 advisorsRouter.post('/:advisor_id/blocks', Authorize('advisor'), AdvisorsController.newBlockForAdvisor, (err) => console.log(err));
 
