@@ -153,8 +153,9 @@ class AdviseesController {
 				return reject("Invalid user id.");
 			}
 			values: [ctx.params.advisee_id]
-			let query = `SELECT * FROM advising_session asa
-			LEFT JOIN advising_block adb on asa.block_id = adb.block_id LEFT JOIN advising_advisor ada on adb.advisor_id = ada.advisor_id WHERE asa.advisor_id = ? and asa.student_id = "";`;
+			let query = `SELECT asa.start_time, ada.advisor_fName, ada.advisor_lName FROM advising_session asa
+			LEFT JOIN advising_block adb on asa.block_id = adb.block_id
+			LEFT JOIN advising_advisor ada on adb.advisor_id = ada.advisor_id WHERE adb.advisor_id = ? and asa.student_id = "";`;
 			// console.log('About to run this query.', query);
 			dbConnection.query({
 				sql: query,

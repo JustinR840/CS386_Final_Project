@@ -18,7 +18,7 @@ class UpcomingSessions extends Component
 	componentDidMount ()
 	{
 		const api = new API();
-		api.getAdviseeAdvisorOpenSessions(this.props.id).then((info) => {
+		api.getAdviseeAdvisorOpenSessions(this.props.advisor_id).then((info) => {
 			let sessions = info['data'];
 			console.log(sessions);
 			this.setState({sessions: sessions});
@@ -34,11 +34,11 @@ class UpcomingSessions extends Component
 		this.state.sessions.forEach(element => {
 			let name = element['advisor_fName'] + ' ' + element['advisor_lName'];
 			let start = new Date(Date.parse(element['start_time'])).toLocaleString();
-			temp.push({start: start, advisor: name, notes: element['notes']});
+			temp.push({start: start, advisor: name,});
 		});
 
-		let headerNames = ['Session Start', 'Advisor', 'Notes'];
-		let rowIndexes = ['start', 'advisor', 'notes'];
+		let headerNames = ['Session Start', 'Advisor'];
+		let rowIndexes = ['start', 'advisor'];
 
 		return (
 			<div>
