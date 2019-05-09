@@ -1,10 +1,6 @@
 const dbConnection = require('../../database/mySQLconnect');
 const dateFormat = require('dateformat');
 
-function now() {
-	return dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-}
-
 class AdviseesController {
 	constructor() {}
 
@@ -28,7 +24,6 @@ class AdviseesController {
 			});
 		}).catch(err => console.log("Database connection error.", err));
 	}
-
 
 	async adviseeInformation(ctx) {
 		return new Promise((resolve, reject) => {
@@ -57,7 +52,6 @@ class AdviseesController {
 			});
 		}).catch(err => console.log("Database connection error.", err));
 	}
-
 
 	async advisorsForAdvisee(ctx) {
 		return new Promise((resolve, reject) => {
@@ -94,7 +88,11 @@ class AdviseesController {
 				return reject("Invalid user id.");
 			}
 			values: [ctx.params.advisee_id]
-			let query = `SELECT * FROM advising_session where student_id = ? and start_time >= now();`;
+			let query = `SELECT asa.start_time, asa.notes, asa.student_id, ada.advisor_fName, ada.advisor_lName
+			FROM advising_session asa
+			LEFT JOIN advising_block adb on asa.block_id = adb.block_id
+			LEFT JOIN advising_advisor ada on adb.advisor_id = ada.advisor_id
+			WHERE asa.student_id = ? and asa.start_time >= now() and asa.session_id not in(select session_id from cancelled_advising_session);`;
 			// console.log('About to run this query.', query);
 			dbConnection.query({
 				sql: query,
@@ -114,6 +112,33 @@ class AdviseesController {
 		}).catch(err => console.log("Database connection error.", err));
 	}
 
+	async adviseeAdvisorOpenSessions(ctx){
+		return new Promise((resolve, reject) => {
+			let match = ctx.params.advisee_id.match(/[^0-9a-zA-Z]+/);  // We expect an alphanumeric id.
+			if (match) {
+				console.log('about to return because user input contains non-alphanumeric characters..');
+				return reject("Invalid user id.");
+			}
+			values: [ctx.params.advisee_id]
+			let query = `SELECT * FROM advising_session asa LEFT JOIN advising_block adb on asa.block_id = adb.block_id LEFT JOIN advising_advisor ada on adb.advisor_id = ada.advisor_id WHERE asa.advisor_id = ? and asa.student_id = NULL;`;
+			// console.log('About to run this query.', query);
+			dbConnection.query({
+				sql: query,
+				values: [ctx.params.advisee_id]
+			}, (error, tuples) => {
+				if (error) {
+					console.log("Connection error in AdviseesController::advisorsForAdvisee", error);
+					ctx.body = '<b>Internal Server Error</b>';
+					ctx.status = 500;
+					return reject(error);
+				}
+				console.log("session tups: ", tuples)
+				ctx.body = tuples;
+				ctx.status = 200;
+				return resolve();
+			});
+		}).catch(err => console.log("Database connection error.", err));
+	}
 	async adviseePastSessions(ctx){
 		return new Promise((resolve, reject) => {
 			let match = ctx.params.advisee_id.match(/[^0-9a-zA-Z]+/);  // We expect an alphanumeric id.
@@ -122,9 +147,11 @@ class AdviseesController {
 				return reject("Invalid user id.");
 			}
 			values: [ctx.params.advisee_id]
-			//let query = `select NOW();`
-			let query = `SELECT * FROM advising_session asa LEFT JOIN advising_block adb on asa.block_id = adb.block_id LEFT JOIN advising_advisor ada on adb.advisor_id = ada.advisor_id WHERE asa.student_id = ? and asa.start_time < now();`;
-			// console.log('About to run this query.', query);
+			`SELECT asa.start_time, asa.notes, asa.student_id, ada.advisor_fName, ada.advisor_lName
+			FROM advising_session asa
+			LEFT JOIN advising_block adb on asa.block_id = adb.block_id
+			LEFT JOIN advising_advisor ada on adb.advisor_id = ada.advisor_id
+			WHERE asa.student_id = ? and asa.start_time < now();`;
 			dbConnection.query({
 				sql: query,
 				values: [ctx.params.advisee_id]
@@ -150,9 +177,12 @@ class AdviseesController {
 				return reject("Invalid user id.");
 			}
 			values: [ctx.params.advisee_id]
-			//let query = `select NOW();`
-			let query = `SELECT * FROM advising_session ads INNER JOIN cancelled_advising_session cas on ads.session_id=cas.session_id where student_id = ?;`;
-			// console.log('About to run this query.', query);
+
+			let query = `SELECT asa.start_time, asa.notes, asa.student_id, ada.advisor_fName, ada.advisor_lName, cas.cancelled_by FROM advising_session asa
+			INNER JOIN cancelled_advising_session cas on asa.session_id=cas.session_id
+			LEFT JOIN advising_block adb on asa.block_id = adb.block_id
+			LEFT JOIN advising_advisor ada on adb.advisor_id = ada.advisor_id where student_id = ?;`;
+
 			dbConnection.query({
 				sql: query,
 				values: [ctx.params.advisee_id]

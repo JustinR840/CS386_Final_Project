@@ -3,6 +3,7 @@ import API from "../../APIInterface/APIInterface.js";
 import UpcomingSessions from "./Sessions/UpcomingSessions";
 import CancelledSessions from "./Sessions/CancelledSessions";
 import PastSessions from "./Sessions/PastSessions";
+import AdvisorSessions from "./Advisors/AdvisorSessions";
 import AdviseeHeader from "./AdviseeHeader";
 
 class AdviseeLandingPage extends Component
@@ -60,16 +61,18 @@ class AdviseeLandingPage extends Component
 	whatMainView()
 	{
 		let current_main_view = this.state.current_main_view;
-
+		console.log(current_main_view);
 		if(current_main_view === "upcoming_sessions")
 			return <UpcomingSessions user={this.state.user}/>;
 		else if(current_main_view === "past_sessions")
 			return <PastSessions user={this.state.user}/>;
 		else if(current_main_view === "cancelled_sessions")
 			return <CancelledSessions user={this.state.user}/>
-		else
-			//return <AdvisorSessions user={this.state.user} advisor={current_main_view}/>;
-			return <h3>Hi</h3>;
+		else{
+			let adv = this.state.advisors.find(obj => obj.advisor_id === current_main_view);
+			let name = adv['advisor_fName'] + ' ' + adv['advisor_lName'];
+			return <AdvisorSessions user={this.state.user} name={name} advisor_id={current_main_view}/>;
+		}
 	}
 
 
@@ -81,7 +84,8 @@ class AdviseeLandingPage extends Component
 			if(this.state.user['role']=== "advisee"){
 				api.getAdvisorsForAdvisee(this.state.user['user_id']).then((info) =>
 				{
-					let arr = info['data'].map(a => new Object({advisor_id: a.advisor_id, advisor_fName: a.advisor_fName, advisor_lName: a.advisor_lName}));
+					let arr ={}
+					arr = info['data'].map(a => new Object({advisor_id: a.advisor_id, advisor_fName: a.advisor_fName, advisor_lName: a.advisor_lName}));
 					if(arr !== null)
 					{
 						this.setState({advisors: arr});

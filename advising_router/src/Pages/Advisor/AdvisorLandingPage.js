@@ -7,6 +7,9 @@ import AllSessions from "./Sessions/AllSessions.js";
 import EditSessions from "./Sessions/EditSessions";
 import MyBlocks from "./Blocks/MyBlocks";
 import BlockCreator from "./Blocks/BlockCreator";
+import PastSessions from "./Sessions/PastSessions";
+import UpcomingSessions from "./Sessions/UpcomingSessions";
+import FutureSessions from "./Sessions/FutureSessions";
 
 
 class AdvisorLandingPage extends Component
@@ -15,15 +18,8 @@ class AdvisorLandingPage extends Component
 	{
 		super(props);
 
-		let user = null;
-
-		if(this.props.user !== null && this.props.user !== undefined)
-		{
-			user = this.props.user;
-		}
-
 		this.state = {
-			user: user,
+			user: props.user,
 			current_main_view: "upcoming_sessions"
 		};
 
@@ -45,11 +41,11 @@ class AdvisorLandingPage extends Component
 		else if(current_main_view === "all_advisees")
 			return <AllAdvisees/>;
 		else if(current_main_view === "upcoming_sessions")
-			return <h3>UPCOMING SESSIONS</h3>;
+			return <UpcomingSessions user={this.state.user}/>;
 		else if(current_main_view === "past_sessions")
-			return <h3>PAST SESSIONS</h3>;
+			return <PastSessions user={this.state.user}/>;
 		else if(current_main_view === "future_sessions")
-			return <h3>FUTURE SESSIONS</h3>;
+			return <FutureSessions user={this.state.user}/>;
 		else if(current_main_view === "all_sessions")
 			return <AllSessions user={this.state.user}/>;
 		else if(current_main_view === "edit_sessions")
@@ -66,7 +62,7 @@ class AdvisorLandingPage extends Component
 	{
 		return (
 			<div>
-				<AdvisorHeader menuName = "AdvisorHeader" user={this.state.user} changeMainView={this.changeMainView}/>
+				<AdvisorHeader setUser={this.props.setUser} menuName = "AdvisorHeader" user={this.state.user} changeMainView={this.changeMainView}/>
 				{this.whatMainView()}
 			</div>
 		);
