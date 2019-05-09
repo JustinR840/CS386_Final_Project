@@ -5,7 +5,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Avatar from "@material-ui/core/Avatar";
-import MenuListComposition from "./MenuListComposition";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import Popper from "@material-ui/core/Popper";
@@ -28,31 +27,6 @@ const styles = theme => ({
 	},
 });
 
-/* function AdviseeHeader(props) {
-	const { classes } = props;
-
-	return (
-		<div className={classes.root}>
-			<AppBar position="static">
-				<Toolbar>
-					<MenuListComposition menuName ={'Sessions'} itemNames={['Upcoming', 'Past', 'Cancelled']}/>
-
-					{/*Should reuse this component by passing in props for things such as menu name and options}
-					<MenuListComposition menuName ={props.headerTwo} itemNames={props.itemNames}/>
-
-					<p className={classes.grow}/>
-
-					{props.userName} ({'Advisee'}).
-
-					<Avatar alt="Mr Erei" src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/14/1431c4dd8fa5afcd314cd5cdf78b9ad8d49556fb_full.jpg" className={classes.avatar} />
-
-					<Button color="inherit">Log Out</Button>
-				</Toolbar>
-			</AppBar>
-		</div>
-	);
-}
-*/
 class AdviseeHeader extends React.Component {
 	constructor(props){
 		super(props);
@@ -117,6 +91,7 @@ class AdviseeHeader extends React.Component {
 		return fName.charAt(0) + lName.charAt(0);
 
 	}
+
 	getCurrentMenuItems()
 	{
 		let {currentlyOpenMenu} = this.state;
@@ -133,11 +108,20 @@ class AdviseeHeader extends React.Component {
 		}
 		else if (currentlyOpenMenu === "advisors")
 		{
+			console.log(this.props.advisor);
+			if(this.props.advisorNames.length === 1){
 			return (
 				<div>
-					<MenuItem id="advisor1" onClick={this.handleClose}>{this.props.advisorNames[0]}</MenuItem>
+					<MenuItem id={this.props.advisors[0]['advisor_id']} name={this.props.advisorNames[0]} onClick={this.handleClose}>{this.props.advisorNames[0]}</MenuItem>
 				</div>
-			)
+			)};
+			if(this.props.advisorNames.length === 2){
+			return (
+				<div>
+					<MenuItem id={this.props.advisors[0]['advisor_id']} name={this.props.advisorNames[0]} onClick={this.handleClose}>{this.props.advisorNames[0]}</MenuItem>
+					<MenuItem id={this.props.advisors[1]['advisor_id']} name={this.props.advisorNames[1]} onClick={this.handleClose}>{this.props.advisorNames[1]}</MenuItem>
+				</div>
+			)};
 		}
 	}
 	render()
