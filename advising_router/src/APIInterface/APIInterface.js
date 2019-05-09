@@ -30,7 +30,7 @@ class APIInterface {
 	{
 		return axios.get(`advisors/${advisor_id}/upcoming_sessions`);
 	}
-	
+
 	async getAdvisorAdvisingBlocks(advisor_id)
 	{
 		return axios.get(`advisors/${advisor_id}/blocks`);
@@ -76,10 +76,6 @@ class APIInterface {
 	async getAdvisorInformation(advisor_id)
 	{
 		return axios.get(`advisors/${advisor_id}`)
-	}
-
-	async keepAlive() {
-		return axios.get('students/keep-alive');
 	}
 
 }
