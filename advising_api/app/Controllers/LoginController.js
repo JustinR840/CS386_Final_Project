@@ -1,5 +1,3 @@
-const crypto = require("crypto");
-
 const dbConnection = require('../../database/mySQLconnect');
 const setAccessToken = require('../../config/setAccessToken');
 
@@ -18,7 +16,7 @@ class LoginController {
             // Make sure both fields were specified
             if(user_id === undefined || password_hash === undefined)
             {
-                console.log("Headers not properly provided");
+                console.log("Information body not properly provided");
                 return reject("No such user.");
             }
 
@@ -43,10 +41,8 @@ class LoginController {
 
                     // If we find a user...
                     if (tuples.length === 1) {  // Did we have a matching user record?
-                        // TODO: The below should be removed and the hashes stored in the DB itself, but whatever this works for now.
                         // Verify that the passwords match
-                        let try_password_hash = crypto.createHash('md5').update(tuples[0]['password_hash']).digest('hex');
-                        if(try_password_hash === password_hash)
+                        if(tuples[0]['password_hash'] === password_hash)
                         {
                             let obj = {
                                 user_id: tuples[0]['user_id'],

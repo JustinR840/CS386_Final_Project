@@ -21,7 +21,7 @@ class AllSessions extends Component
 	{
 		const api = new API();
 
-		api.getAllSessionsForAdvisor(this.props.user['user_id']).then((info) => {
+		api.getFutureSessionsForAdvisor(this.props.user['user_id']).then((info) => {
 			let sessions = info['data'];
 			this.setState({sessions: sessions});
 		}).catch((error) => {
@@ -37,7 +37,7 @@ class AllSessions extends Component
 
 		return (
 			<div>
-				<Typography variant="h3" align="center" style={{marginTop: '20px'}}>All Advising Appointments</Typography>
+				<Typography variant="h3" align="center" style={{marginTop: '20px'}}>Future Advising Appointments</Typography>
 				<PaginationTable headerNames={headerNames} rowIndexes={rowIndexes} rows={this.state.sessions}/>
 			</div>
 		);
