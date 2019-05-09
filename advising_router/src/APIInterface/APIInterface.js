@@ -8,20 +8,12 @@ class APIInterface {
 	async getUserInfo(user_id, password) {
 		let password_hash = crypto.createHash('md5').update(password).digest('hex');
 
-	/*	let config = {
-			headers: {
-				user_id: user_id,
-				password_hash: password_hash
-			}
-		};*/
 		return axios.post(`login`, {user_id: user_id, password_hash: password_hash});
-	//	return axios.get(`login`, config);
-
 	}
 
 	async createNewBlock(advisor_id, block_information)
 	{
-		return axios.post(`advisors/${advisor_id}/blocks`, block_information);
+		return axios.post(`advisors/${advisor_id}/blocks`, {post_data: block_information});
 	}
 
 	async getAdvisorAdvisingBlocks(advisor_id)
