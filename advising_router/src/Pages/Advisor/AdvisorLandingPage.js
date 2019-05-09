@@ -18,15 +18,8 @@ class AdvisorLandingPage extends Component
 	{
 		super(props);
 
-		let user = null;
-
-		if(this.props.user !== null && this.props.user !== undefined)
-		{
-			user = this.props.user;
-		}
-
 		this.state = {
-			user: user,
+			user: props.user,
 			current_main_view: "upcoming_sessions"
 		};
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import API from "../../../APIInterface/APIInterface.js";
 import PaginationTable from "../PaginationTable";
+import {Typography} from "@material-ui/core";
 
 
 class AllSessions extends Component
@@ -36,6 +37,7 @@ class AllSessions extends Component
 
 		return (
 			<div>
+				<Typography variant="h3" align="center" style={{marginTop: '20px'}}>Past Advising Appointments</Typography>
 				<PaginationTable headerNames={headerNames} rowIndexes={rowIndexes} rows={this.state.sessions}/>
 			</div>
 		);

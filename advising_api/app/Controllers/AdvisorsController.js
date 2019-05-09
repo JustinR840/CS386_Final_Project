@@ -193,7 +193,18 @@ class AdvisorsController {
 				return reject("Invalid user id.");
 			}
 
-			let query = "SELECT * FROM advising_session ad_se LEFT JOIN advising_block ad_bl ON ad_se.block_id = ad_bl.block_id WHERE ad_bl.advisor_id = ? AND ad_se.start_time < NOW() + INTERVAL 7 DAY";
+			let query = `
+			SELECT
+			ad_se.locked, ad_se.block_id, ad_se.start_time, ad_se.student_id, ad_se.status, ad_se.notes
+			FROM
+			advising_session ad_se
+			LEFT JOIN
+			advising_block ad_bl
+			ON
+			ad_se.block_id = ad_bl.block_id
+			WHERE ad_bl.advisor_id = ?
+			AND
+			ad_se.start_time < NOW() + INTERVAL 7 DAY`;
 			dbConnection.query({
 				sql: query,
 				values: [ctx.params.advisor_id]

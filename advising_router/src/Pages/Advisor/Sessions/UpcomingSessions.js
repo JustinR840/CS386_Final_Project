@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import API from "../../../APIInterface/APIInterface.js";
 import PaginationTable from "../PaginationTable";
+import moment from "moment";
+import {Typography} from "@material-ui/core";
 
 
 class AllSessions extends Component
@@ -32,11 +34,23 @@ class AllSessions extends Component
 
 	render()
 	{
-		let headerNames = ['advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
-		let rowIndexes = ['advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
+		let headerNames = ['locked', 'status', 'block_id', 'start_time', 'student_id', 'notes'];
+		let rowIndexes = ['locked', 'status', 'block_id', 'start_time', 'student_id', 'notes'];
+
+		let test_sessions = this.state.sessions;
+
+		if(test_sessions !== undefined)
+		{
+			for(let i = 0; i < test_sessions.length; i++)
+			{
+				test_sessions[i]['start_time'] = moment(test_sessions[i]['start_time']).utc().format(`YYYY-MM-DD HH:mm:ss`);
+				test_sessions[i]['end_time'] = moment(test_sessions[i]['end_time']).utc().format(`YYYY-MM-DD HH:mm:ss`);
+			}
+		}
 
 		return (
 			<div>
+				<Typography variant="h3" align="center" style={{marginTop: '20px'}}>Upcoming Advising Appointments</Typography>
 				<PaginationTable headerNames={headerNames} rowIndexes={rowIndexes} rows={this.state.sessions}/>
 			</div>
 		);
