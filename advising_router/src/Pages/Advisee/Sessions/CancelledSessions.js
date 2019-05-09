@@ -19,13 +19,7 @@ class PastSessions extends Component
 	componentDidMount ()
 	{
 		const api = new API();
-		/*api.getAdviseeUpcomingSessions(this.props.user['user_id']).then((info) => {
-			let sessions = info['data'];
 
-			this.setState({sessions: sessions});
-		}).catch((error) => {
-
-		});*/
     api.getAdviseeCancelledSessions(this.props.user['user_id']).then((info) => {
       let sessions = info['data'];
 
@@ -38,17 +32,16 @@ class PastSessions extends Component
 
 	render()
 	{
-	//	let headerNames = ['advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
-		//let rowIndexes = ['advisor_id', 'block_id', 'end_time', 'locked', 'num_sessions', 'session_id', 'start_time', 'status', 'student_id', 'notes'];
+
 		let temp = []
 		this.state.sessions.forEach(element => {
 			let name = element['advisor_fName'] + ' ' + element['advisor_lName'];
 			let start = new Date(Date.parse(element['start_time'])).toLocaleString();
-			temp.push({start: start, advisor: name, notes: element['notes']});
+			temp.push({start: start, cancelled_by: element['cancelled_by'], advisor: name, notes: element['notes']});
 		});
 
-		let headerNames = ['Session Start', 'Advisor', 'Notes'];
-		let rowIndexes = ['start', 'advisor', 'notes'];
+		let headerNames = ['Cancelled By', 'Session Start', 'Advisor', 'Notes'];
+		let rowIndexes = ['cancelled_by', 'start', 'advisor', 'notes'];
 
 		return (
       <div>

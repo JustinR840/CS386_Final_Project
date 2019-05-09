@@ -61,7 +61,7 @@ class AdviseeLandingPage extends Component
 	whatMainView()
 	{
 		let current_main_view = this.state.current_main_view;
-
+		console.log(current_main_view);
 		if(current_main_view === "upcoming_sessions")
 			return <UpcomingSessions user={this.state.user}/>;
 		else if(current_main_view === "past_sessions")

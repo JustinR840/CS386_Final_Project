@@ -47,7 +47,7 @@ adviseesRouter.get('/:advisee_id/advisors', Authorize('advisee'), AdviseesContro
 adviseesRouter.get('/:advisee_id/sessions', Authorize('advisee'), AdviseesController.adviseeUpcomingSessions, (err) => console.log(err));
 adviseesRouter.get('/:advisee_id/pastsessions', Authorize('advisee'), AdviseesController.adviseePastSessions, (err) => console.log(err));
 adviseesRouter.get('/:advisee_id/cancelledsessions', Authorize('advisee'), AdviseesController.adviseeCancelledSessions, (err) => console.log(err));
-
+adviseesRouter.get('/:user_id/open', Authorize('advisee'), AdviseesController.adviseeAdvisorOpenSessions, (err) => console.log(err));
 /**
  * Advisors controller
  */
